@@ -1,0 +1,77 @@
+.create-product {
+    max-width: 600px;
+    margin: 10em auto 2em auto;
+    padding: 2em;
+    background-color: #fff;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .create-product h2 {
+    text-align: center;
+    margin-bottom: 1.5em;
+    color: #333;
+  }
+  
+  .create-product form {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+  }
+  
+  .create-product input[type="text"],
+  .create-product input[type="number"],
+  .create-product input[type="file"],
+  .create-product textarea {
+    padding: 0.8em;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    transition: border 0.2s ease;
+  }
+  
+  .create-product input:focus,
+  .create-product textarea:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  .create-product textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+  
+  .create-product button {
+    padding: 0.9em;
+    font-size: 1rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .create-product button:hover {
+    background-color: #0056b3;
+  }
+  
+  .create-product img {
+    margin-top: 1em;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .create-product select {
+    padding: 0.8em;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: white;
+    outline: none;
+  }
+  
+  .create-product input::placeholder{
+    color: black;
+  }

@@ -1,0 +1,12 @@
+.products {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(220px, 1fr));
+    gap: 2rem;
+    padding: 3rem 2rem;
+    justify-items: center;
+    background-color: #f9f9f9;
+  }
+  
+
+@import url('../utils/ProductList/productList.css');
+

@@ -1,0 +1,74 @@
+.login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f7f7f7;
+    padding-top: 6em; /* For fixed navbars */
+    flex-direction: column;
+    gap: 3em;
+  }
+  
+  .login-page form {
+    background-color: white;
+    padding: 2.5em 2em;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2em;
+  }
+  
+  .login-page input {
+    padding: 0.8em 1em;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+    transition: border 0.2s ease;
+    /* color: black !important; */
+  }
+  
+  .login-page input:focus {
+    border-color: #007bff;
+  }
+  
+  .login-page .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1em;
+  }
+  
+  .login-page button {
+    background-color: #007bff;
+    color: white;
+    padding: 0.8em 1.5em;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.2s ease;
+  }
+  
+  .login-page button:hover {
+    background-color: #0056b3;
+  }
+  
+  .login-page a {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: 500;
+    transition: color 0.2s ease;
+  }
+  
+  .login-page a:hover {
+    color: #004b9d;
+  }
+
+  .login-page input::placeholder {
+    color: black !important;
+  }
+  

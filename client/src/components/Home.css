@@ -1,0 +1,210 @@
+
+/* Hero Section */
+.hero-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f5f7fa;
+  padding: 60px 80px;
+  flex-wrap: wrap;
+}
+
+.hero-content {
+  flex: 1;
+  max-width: 500px;
+}
+
+.hero-content h4 {
+  font-size: 18px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.hero-content h1 {
+  font-size: 48px;
+  color: #222;
+  line-height: 1.3;
+  margin-bottom: 15px;
+}
+
+.hero-content h1 span {
+  color: #088178;
+}
+
+.hero-content p {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 25px;
+}
+
+.hero-btn {
+  padding: 12px 28px;
+  background-color: #088178;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+.hero-image img {
+  max-width: 400px;
+  width: 100%;
+}
+
+/* Features Section */
+.features {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 40px 20px;
+}
+
+.feature-box {
+  text-align: center;
+  padding: 20px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  width: 140px;
+  transition: transform 0.2s ease;
+}
+
+.feature-box:hover {
+  transform: translateY(-5px);
+}
+
+.feature-box img {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.feature-box h6 {
+  font-size: 14px;
+  color: #333;
+}
+
+/* Product Section */
+.product-section {
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.product-section h2 {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.product-section p {
+  color: #777;
+  margin-bottom: 30px;
+}
+
+/* Product Grid */
+.products_container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2em;
+  justify-items: center;
+  padding: 0 20px;
+}
+
+@media (max-width: 1024px) {
+  .products_container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .products_container {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-section {
+    padding: 30px 20px;
+    text-align: center;
+    flex-direction: column-reverse;
+  }
+
+  .hero-content {
+    max-width: 100%;
+  }
+
+  .hero-image img {
+    max-width: 100%;
+  }
+}
+
+/* Offer Banner */
+.offer-banner {
+  background: #1a1a1a;
+  color: white;
+  text-align: center;
+  padding: 60px 20px;
+  margin: 40px 0;
+}
+
+.offer-banner h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+.offer-banner a {
+  color: white;
+  border: 1px solid white;
+  padding: 10px 20px;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+.offer-banner a:hover {
+  background: white;
+  color: #1a1a1a;
+}
+
+/* Newsletter Section */
+.newsletter {
+  background: #e3e6f3;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px 60px;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.newsletter-text h2 {
+  font-size: 24px;
+}
+
+.newsletter-text p {
+  font-size: 14px;
+  color: #555;
+}
+
+.newsletter-text span {
+  color: #088178;
+  font-weight: bold;
+}
+
+.newsletter-form {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.newsletter-form input {
+  padding: 10px 15px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px 0 0 4px;
+  outline: none;
+}
+
+.newsletter-form button {
+  padding: 10px 20px;
+  background: #088178;
+  color: white;
+  border: none;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+}
