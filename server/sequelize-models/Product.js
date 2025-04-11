@@ -6,7 +6,11 @@ const Product = sequelize.define(
   {
     product_unique_id: {
       type: DataTypes.STRING,
-      unique: true,
+      unique: {
+        name: "product_unique_id", // Explicit name
+        msg: "Product unique ID must be unique",
+      },
+
       allowNull: false,
     },
     product_id: {
