@@ -8,7 +8,7 @@ const ProductAPI = () => {
 
 
 const getProducts = async() => {
-  const res = await axios.get(`BASE_URL/api/products`);
+  const res = await axios.get(`${BASE_URL}/api/products`);
   setProducts(res.data.products);
   // console.log(res.data.products)
 }

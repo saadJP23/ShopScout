@@ -1,5 +1,4 @@
-require('dotenv').config();
-
+require("dotenv").config();
 
 const express = require("express");
 const sequelize = require("./config/database");
@@ -29,9 +28,12 @@ const generateOrderNumber = () =>
 
 // Middleware
 app.use(cors({
-  origin: 'https://main.d1b1b2mnj76860.amplifyapp.com',
-  credentials: true
+  origin: ['https://main.d1b1b2mnj76860.amplifyapp.com'],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
 }));
+
 
 app.post(
   "/webhook",
