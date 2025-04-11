@@ -4,7 +4,8 @@ import axios from 'axios'
 
 const Register = () => {
 
-  
+  const BASE_URL = 'https://shopscout-production-7795.up.railway.app';
+
   const [user, setUser] = useState({
     name:'',
     email:'',
@@ -20,11 +21,11 @@ const Register = () => {
     e.preventDefault()
   
     try{
-      await axios.post('http://localhost:5000/user/register', {...user}, { withCredentials: true })
+      await axios.post(`${BASE_URL}/user/register`, {...user}, { withCredentials: true })
 
       
 
-      const res = await axios.post('http://localhost:5000/user/login', {...user}, { withCredentials: true })
+      const res = await axios.post(`${BASE_URL}/user/login`, {...user}, { withCredentials: true })
       localStorage.setItem('firstLogin', true)
       localStorage.setItem('userEmail', user.email)
 

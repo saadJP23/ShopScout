@@ -12,6 +12,8 @@ const DetailProduct = () => {
   const [detailProduct, setDetailProduct] = useState(null);
   const [mainImage, setMainImage] = useState("");
   const addCart = state.userAPI.addCart;
+  const BASE_URL = 'https://shopscout-production-7795.up.railway.app';
+
 
   useEffect(() => {
     if (id && products.length > 0) {
@@ -33,7 +35,7 @@ const DetailProduct = () => {
   const handleBuyNow = async () => {
     try {
       const userEmail = localStorage.getItem("userEmail");
-      const res = await axios.post("http://localhost:5000/api/checkout-single", {
+      const res = await axios.post(`${BASE_URL}/api/checkout-single`, {
         product: {
           title: detailProduct.title,
           price: detailProduct.price,

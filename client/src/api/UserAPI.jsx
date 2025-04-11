@@ -9,12 +9,13 @@ const UserAPI = (token) => {
     name: "",
     email: "",
   });
+  const BASE_URL = 'https://shopscout-production-7795.up.railway.app';
 
   useEffect(() => {
     if (token) {
       const getUser = async () => {
         try {
-          const res = await axios.get("http://localhost:5000/user/infor", {
+          const res = await axios.get(`${BASE_URL}/user/infor`, {
             headers: { Authorization: `Bearer ${token}` },
           });
 
@@ -62,7 +63,7 @@ const UserAPI = (token) => {
       
 
       await axios.patch(
-        "http://localhost:5000/user/addcart",
+        `${BASE_URL}/user/addcart`,
         { cart: formattedCart },
         { headers: { Authorization: `Bearer ${token}` } }
       );

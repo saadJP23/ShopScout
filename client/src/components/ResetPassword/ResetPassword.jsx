@@ -8,12 +8,14 @@ const ResetPassword = () => {
   const [msg, setMsg] = useState("");
   const { token } = useParams();
   const navigate = useNavigate();
+  const BASE_URL = 'https://shopscout-production-7795.up.railway.app';
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const res = await axios.post(
-        "http://localhost:5000/user/reset_password",
+        `${BASE_URL}/user/reset_password`,
         {
           token, // ✅ Send token in the body, not URL
           newPassword: password,

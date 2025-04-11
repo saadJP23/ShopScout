@@ -15,16 +15,18 @@ const Cart = () => {
     name: "",
     email: "",
   });
+  const BASE_URL = 'https://shopscout-production-7795.up.railway.app';
+
 
   useEffect(() => {
     const fetchCartData = async () => {
       try {
-        const userRes = await axios.get("http://localhost:5000/user/infor", {
+        const userRes = await axios.get(`${BASE_URL}/user/infor`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
         const productRes = await axios.get(
-          "http://localhost:5000/api/products"
+          `${BASE_URL}/api/products`
         );
 
         const allProducts = productRes.data.products;
@@ -69,7 +71,7 @@ const Cart = () => {
       setCart(updatedCart);
 
       await axios.patch(
-        "http://localhost:5000/user/addcart",
+        `${BASE_URL}/user/addcart`,
         { cart: reducedCart },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -160,7 +162,7 @@ const Cart = () => {
     }));
 
     try {
-      const res = await axios.post("http://localhost:5000/api/checkout-cart", {
+      const res = await axios.post(`${BASE_URL}/api/checkout-cart`, {
         cart: cleanedCart,
         email: userEmail,
       });

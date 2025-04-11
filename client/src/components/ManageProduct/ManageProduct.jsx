@@ -8,11 +8,13 @@ const ManageProduct = () => {
   const state = useContext(GlobalState);
   const [products, setProducts] = state.productsAPI.products;
   const [callback, setCallback] = state.productsAPI.callback;
+  const BASE_URL = 'https://shopscout-production-7795.up.railway.app';
+
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/products");
+        const res = await axios.get(`${BASE_URL}/api/products`);
         setProducts(res.data.products);
       } catch (err) {
         console.error("Error fetching products:", err);
@@ -25,7 +27,7 @@ const ManageProduct = () => {
   const deleteProduct = async (id) => {
     if (window.confirm("Are you sure you want to delete this product?")) {
       try {
-        await axios.delete(`http://localhost:5000/api/products/${id}`);
+        await axios.delete(`${BASE_URL}/api/products/${id}`);
         setCallback((prev) => !prev);
       } catch (err) {
         console.error("Delete failed:", err);

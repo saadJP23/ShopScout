@@ -11,12 +11,14 @@ const ProductLists = ({ products, spaced }) => {
   const [showSizeModal, setShowSizeModal] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [selectedSize, setSelectedSize] = useState("");
+  const BASE_URL = 'https://shopscout-production-7795.up.railway.app';
+
 
   const handleBuyNow = async (product) => {
     try {
       const userEmail = localStorage.getItem("userEmail");
       const res = await axios.post(
-        "http://localhost:5000/api/checkout-single",
+        `${BASE_URL}/api/checkout-single`,
         {
           product: {
             title: product.title,

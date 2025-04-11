@@ -9,6 +9,7 @@ const CreateProduct = () => {
   const navigate = useNavigate();
   const state = useContext(GlobalState);
   const [callback, setCallback] = state.productsAPI.callback;
+  const BASE_URL = 'https://shopscout-production-7795.up.railway.app';
 
   const [product, setProduct] = useState({
     product_unique_id: uuidv4(),
@@ -58,7 +59,7 @@ const CreateProduct = () => {
 
       try {
         const res = await axios.post(
-          "http://localhost:5000/api/upload",
+          `${BASE_URL}/api/upload`,
           formData,
           {
             headers: { "content-type": "multipart/form-data" },
@@ -80,7 +81,7 @@ const CreateProduct = () => {
     if (!images) return alert("Please upload an image");
 
     try {
-      const res = await axios.post("http://localhost:5000/api/products", {
+      const res = await axios.post(`${BASE_URL}/api/products`, {
         ...product,
         images,
       });

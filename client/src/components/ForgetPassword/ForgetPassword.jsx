@@ -6,11 +6,13 @@ import "./ForgetPassword.css";
 const ForgetPassword = () => {
   const [email, setEmail] = useState("");
   const [msg, setMsg] = useState("");
+  const BASE_URL = 'https://shopscout-production-7795.up.railway.app';
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:5000/user/forget_password", {
+      const res = await axios.post(`${BASE_URL}/user/forget_password`, {
         email,
       });
       setMsg(res.data.msg);

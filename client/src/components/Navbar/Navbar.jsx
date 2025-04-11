@@ -13,9 +13,11 @@ const Navbar = () => {
   const [cart, setCart] = state.userAPI.cart;
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
+  const BASE_URL = 'https://shopscout-production-7795.up.railway.app';
+
 
   const logoutUser = async () => {
-    await axios.get("http://localhost:5000/user/logout", {
+    await axios.get(`${BASE_URL}/user/logout`, {
       withCredentials: true,
     });
     localStorage.removeItem("firstLogin");

@@ -3,6 +3,7 @@ import "./Contact.css";
 import axios from 'axios'
 
 const Contact = () => {
+  const BASE_URL = 'https://shopscout-production-7795.up.railway.app';
 
   const [formData, setFormData] = useState({
     name: "",
@@ -12,7 +13,7 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/contact', formData);
+      await axios.post(`${BASE_URL}/api/contact`, formData);
       alert("Message sent!");
       setFormData({ name: "", email: "", message: "" });
     } catch (err) {

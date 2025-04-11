@@ -8,12 +8,14 @@ const History = () => {
   const state = useContext(GlobalState);
   const [token] = state.token;
   const [isLogged] = state.userAPI.isLogged;
+  const BASE_URL = 'https://shopscout-production-7795.up.railway.app';
+
 
   useEffect(() => {
     const getHistory = async () => {
       try {
         if (isLogged) {
-          const res = await axios.get("http://localhost:5000/user/history", {
+          const res = await axios.get(`${BASE_URL}/user/history`, {
             headers: { Authorization: token },
             withCredentials: true,
           });

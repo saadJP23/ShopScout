@@ -10,6 +10,8 @@ const Edit = () => {
   const navigate = useNavigate();
   const state = useContext(GlobalState);
   const [callback, setCallback] = state.productsAPI.callback;
+  const BASE_URL = 'https://shopscout-production-7795.up.railway.app';
+
 
   const [product, setProduct] = useState({
     title: "",
@@ -27,7 +29,7 @@ const Edit = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/products");
+        const res = await axios.get(`${BASE_URL}/api/products`);
         const productToEdit = res.data.products.find(
           (p) => p.id === parseInt(id)
         );
@@ -100,7 +102,7 @@ const Edit = () => {
 
       try {
         const res = await axios.post(
-          "http://localhost:5000/api/upload",
+          `${BASE_URL}/api/upload`,
           formData,
           {
             headers: { "content-type": "multipart/form-data" },
@@ -122,7 +124,7 @@ const Edit = () => {
     if (!images.length) return alert("Please upload at least one image");
 
     try {
-      await axios.put(`http://localhost:5000/api/products/${id}`, {
+      await axios.put(`${BASE_URL}/api/products/${id}`, {
         ...product,
         images,
       });
