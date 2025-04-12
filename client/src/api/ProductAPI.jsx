@@ -8,9 +8,13 @@ const ProductAPI = () => {
 
 
 const getProducts = async() => {
-  const res = await axios.get(`${BASE_URL}/api/products`);
-  setProducts(res.data.products);
-  // console.log(res.data.products)
+  try {
+    const res = await axios.get(`${BASE_URL}/api/products`);
+    console.log('✅ Products response:', res.data);
+    setProducts(res.data.products); // Or adapt if your key is different
+  } catch (err) {
+    console.error('❌ Fetch error:', err);
+  }
 }
 
 useEffect(() => {

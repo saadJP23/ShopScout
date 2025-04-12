@@ -8,11 +8,12 @@ export const GlobalState = createContext();
 
 export const DataProvider = ({ children }) => {
   const [token, setToken] = useState(false);
+  const BASE_URL = 'https://shopscout-production-7795.up.railway.app';
 
   const refreshToken = async () => {
     try {
       const res = await axios.post(
-        "http://localhost:5000/user/refresh_token",
+        `${BASE_URL}/user/refresh_token`,
         null,
         {
           withCredentials: true,
