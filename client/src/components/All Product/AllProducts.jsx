@@ -3,6 +3,7 @@ import list from "../List";
 import "./AllProducts.css";
 import ProductLists from "../mainpages/utils/ProductList/ProductLists";
 import { GlobalState } from "../../GlobalState";
+import LoadingSpinner from "../LoadingSpinner";
 
 const AllProducts = () => {
   const state = useContext(GlobalState);
