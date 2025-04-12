@@ -388,7 +388,8 @@ sequelize
     await sequelize.query("SET FOREIGN_KEY_CHECKS = 0");
 
     // Alter tables to match the updated models
-    sequelize.sync({ alter: true }); // DANGER: Drops and recreates all tables
+    sequelize.sync(); // ✅ Just sync without altering
+
 
     // Re-enable foreign key checks
     await sequelize.query("SET FOREIGN_KEY_CHECKS = 1");
