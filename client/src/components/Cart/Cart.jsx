@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { GlobalState } from "../../GlobalState";
 import "./Cart.css";
+import LoadingSpinner from "../LoadingSpinner";
 
 const Cart = () => {
   const state = useContext(GlobalState);
@@ -10,13 +11,13 @@ const Cart = () => {
   const [isLogged, setIsLogged] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [cart, setCart] = state.userAPI.cart || [[], () => {}];
+  const [loading, setLoading] = useState(true);
 
   const [userInfo, setUserInfo] = useState({
     name: "",
     email: "",
   });
-  const BASE_URL = 'https://shopscout-production-7795.up.railway.app';
-
+  const BASE_URL = "https://shopscout-production-7795.up.railway.app";
 
   useEffect(() => {
     const fetchCartData = async () => {
@@ -25,9 +26,7 @@ const Cart = () => {
           headers: { Authorization: `Bearer ${token}` },
         });
 
-        const productRes = await axios.get(
-          `${BASE_URL}/api/products`
-        );
+        const productRes = await axios.get(`${BASE_URL}/api/products`);
 
         const allProducts = productRes.data.products;
         const cartItems = userRes.data.cart || [];
@@ -41,19 +40,17 @@ const Cart = () => {
               product,
             };
           })
-          .filter((item) => item.product); // filter out missing products
+          .filter((item) => item.product);
 
         setUserInfo({ name: userRes.data.name, email: userRes.data.email });
         setIsLogged(true);
         setIsAdmin(userRes.data.role === 1);
-        // console.log(mergedCart)
         setCart(mergedCart);
         setUserEmail(userRes.data.email);
       } catch (err) {
-        console.error(
-          "Failed to load cart:",
-          err.response?.data?.msg || err.message
-        );
+        console.error("Failed to load cart:", err.response?.data?.msg || err.message);
+      } finally {
+        setLoading(false); // ✅ Done loading
       }
     };
 
@@ -76,10 +73,7 @@ const Cart = () => {
         { headers: { Authorization: `Bearer ${token}` } }
       );
     } catch (err) {
-      console.error(
-        "Cart sync failed:",
-        err.response?.data?.msg || err.message
-      );
+      console.error("Cart sync failed:", err.response?.data?.msg || err.message);
     }
   };
 
@@ -102,19 +96,16 @@ const Cart = () => {
     setCart(updated);
     syncCart(updated);
   };
+
   const removeItem = (id, size) => {
-    const updated = cart.filter(
-      (item) => !(item._id === id && item.size === size)
-    );
+    const updated = cart.filter((item) => !(item._id === id && item.size === size));
     setCart(updated);
     syncCart(updated);
   };
 
   const handleSizeChange = (id, oldSize, newSize) => {
     const updated = cart.map((item) =>
-      item._id === id && item.size === oldSize
-        ? { ...item, size: newSize }
-        : item
+      item._id === id && item.size === oldSize ? { ...item, size: newSize } : item
     );
     setCart(updated);
     syncCart(updated);
@@ -129,22 +120,7 @@ const Cart = () => {
   const getTotalItems = () =>
     cart.reduce((total, item) => total + item.quantity, 0);
 
-  const cleanedCart = cart
-    .filter((item) => item.product) // 💡 ensure product exists
-    .map((item) => ({
-      product: {
-        title: item.product.title,
-        price: item.product.price,
-        image: item.product.images?.[0]?.url || item.product.images?.[0] || "",
-      },
-      quantity: item.quantity,
-      size: item.size,
-      productId: item.product.id || item._id,
-    }));
-
   const handleCheckout = async () => {
-    // console.log(userEmail)
-
     const cleanedCart = cart.map((item) => ({
       product: {
         title: item.product?.title || item.title,
@@ -173,6 +149,11 @@ const Cart = () => {
     }
   };
 
+  // ✅ Show spinner while loading
+  if (loading) {
+    return <LoadingSpinner />;
+  }
+
   if (!Array.isArray(cart) || cart.length === 0) {
     return (
       <h2 style={{ textAlign: "center", paddingTop: "90px" }}>
@@ -181,63 +162,60 @@ const Cart = () => {
     );
   }
 
-  console.log(cart);
-
   return (
     <div className="cart-page">
       <h2>Your Cart</h2>
-      {Array.isArray(cart) &&
-        cart.map(
-          (item) =>
-            item.product && (
-              <div key={`${item._id}-${item.size}`} className="cart-item">
-                <img
-                  src={
-                    item.product.images?.[0]?.url || item.product.images?.[0]
-                  }
-                  alt={item.product.title}
-                />
+      {cart.map(
+        (item) =>
+          item.product && (
+            <div key={`${item._id}-${item.size}`} className="cart-item">
+              <img
+                src={
+                  item.product.images?.[0]?.url || item.product.images?.[0]
+                }
+                alt={item.product.title}
+              />
 
-                <div className="cart-details">
-                  <h3>{item.product.title}</h3>
-                  <p>Price: ¥{item.product.price}</p>
+              <div className="cart-details">
+                <h3>{item.product.title}</h3>
+                <p>Price: ¥{item.product.price}</p>
 
-                  <div className="size-select">
-                    <label>Size: </label>
-                    <select
-                      value={item.size || ""}
-                      onChange={(e) =>
-                        handleSizeChange(item._id, item.size, e.target.value)
-                      }
-                    >
-                      <option value="">Select</option>
-                      {item.product?.sizes?.map((s, index) => (
-                        <option key={index} value={s.size}>
-                          {s.size}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
+                <div className="size-select">
+                  <label>Size: </label>
+                  <select
+                    value={item.size || ""}
+                    onChange={(e) =>
+                      handleSizeChange(item._id, item.size, e.target.value)
+                    }
+                  >
+                    <option value="">Select</option>
+                    {item.product?.sizes?.map((s, index) => (
+                      <option key={index} value={s.size}>
+                        {s.size}
+                      </option>
+                    ))}
+                  </select>
+                </div>
 
-                  <div className="cart-controls">
-                    <button onClick={() => decreaseQty(item._id, item.size)}>
-                      -
-                    </button>
-                    <span>{item.quantity}</span>
-                    <button onClick={() => increaseQty(item._id, item.size)}>
-                      +
-                    </button>
-                    <button
-                      className="remove-btn"
-                      onClick={() => removeItem(item._id, item.size)}
-                    >
-                      Remove
-                    </button>
-                  </div>
+                <div className="cart-controls">
+                  <button onClick={() => decreaseQty(item._id, item.size)}>
+                    -
+                  </button>
+                  <span>{item.quantity}</span>
+                  <button onClick={() => increaseQty(item._id, item.size)}>
+                    +
+                  </button>
+                  <button
+                    className="remove-btn"
+                    onClick={() => removeItem(item._id, item.size)}
+                  >
+                    Remove
+                  </button>
                 </div>
               </div>
-            )
-        )}
+            </div>
+          )
+      )}
       <div className="cart-summary">
         <h3>Summary</h3>
         <p>Total Items: {getTotalItems()}</p>
