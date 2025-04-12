@@ -34,10 +34,11 @@ app.use(
       "https://main.d1b1b2mnj76860.amplifyapp.com"
     ],
     credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"], // ✅ include PATCH
     allowedHeaders: ["Content-Type", "Authorization"]
   })
 );
+
 
 app.options("*", cors());
 
