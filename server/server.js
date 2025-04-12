@@ -288,6 +288,7 @@ app.post("/api/checkout-single", async (req, res) => {
       ],
       success_url: `${FRONTEND_URL}/success`,
       cancel_url: `${FRONTEND_URL}/cancel`,
+      allow_promotion_codes: true,
 
       payment_intent_data: {
         metadata: {
@@ -336,9 +337,15 @@ app.post("/api/checkout-cart", async (req, res) => {
       mode: "payment",
       customer_email: email,
       line_items,
+      discounts: [
+        {
+          coupon: "COUPON_ID_100_OFF", // Replace with your actual 100% off coupon ID from Stripe
+        },
+      ],
       
       success_url: `${FRONTEND_URL}/success`,
       cancel_url: `${FRONTEND_URL}/cancel`,
+      allow_promotion_codes: true,
 
       payment_intent_data: {
         metadata: {
