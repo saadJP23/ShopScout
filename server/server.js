@@ -31,11 +31,16 @@ app.use(
   cors({
     origin: [
       "http://localhost:3000",
-      "https://main.d1b1b2mnj76860.amplifyapp.com",
+      "https://main.d1b1b2mnj76860.amplifyapp.com"
     ],
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"]
   })
 );
+
+app.options("*", cors());
+
 
 app.post(
   "/webhook",
