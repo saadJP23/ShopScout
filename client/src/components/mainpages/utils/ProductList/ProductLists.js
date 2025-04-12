@@ -6,7 +6,7 @@ import { GlobalState } from "../../../../GlobalState";
 import axios from "axios";
 import LoadingSpinner from "../../../../components/LoadingSpinner";
 
-const ProductLists = ({ products, loading, spaced }) => {
+const ProductLists = ({ products, spaced }) => {
   const state = useContext(GlobalState);
   const addCart = state.userAPI.addCart;
   const [showSizeModal, setShowSizeModal] = useState(false);
@@ -55,7 +55,6 @@ const ProductLists = ({ products, loading, spaced }) => {
 
   return (
     <>
-    {loading && <LoadingSpinner />}
       <div className={`product-cart ${spaced ? "with-spacing" : ""}`}>
         <div className="product_card_alt">
           <Link

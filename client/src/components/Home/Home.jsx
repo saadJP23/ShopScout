@@ -6,12 +6,11 @@ import { Link } from "react-router-dom";
 import ProductLists from "../mainpages/utils/ProductList/ProductLists";
 import { GlobalState } from "../../GlobalState";
 import { useContext } from "react";
-import LoadingSpinner from "../LoadingSpinner";
 
 const Home = () => {
   const state = useContext(GlobalState);
   const [products] = state.productsAPI.products;
-  const [loading, setLoading] = useState(false);
+  const loading = state.productsAPI.loading
 
   return (
     <div className="homepage">

@@ -3,12 +3,11 @@ import list from "../List";
 import "./AllProducts.css";
 import ProductLists from "../mainpages/utils/ProductList/ProductLists";
 import { GlobalState } from "../../GlobalState";
-import LoadingSpinner from "../LoadingSpinner";
 
 const AllProducts = () => {
   const state = useContext(GlobalState);
   const [products] = state.productsAPI.products;
-  const [loading] = state.productsAPI.loading;
+  const loading = state.productsAPI.loading
 
   useEffect(() => {
     console.log("New Item Added.");
