@@ -1,11 +1,10 @@
-const bcrypt = require('bcryptjs');
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../sequelize-models/User");
 const CartItem = require("../sequelize-models/CartItem");
 const Category = require("../sequelize-models/Category");
 const Product = require("../sequelize-models/Product");
 const nodemailer = require("nodemailer");
-
 
 const createAccessToken = (user) => {
   return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "1d" });
@@ -43,7 +42,9 @@ const userControl = {
       res.cookie("refreshtoken", refreshToken, {
         httpOnly: true,
         path: "/user/refresh_token",
-        maxAge: 7 * 24 * 60 * 60 * 1000,
+        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+        sameSite: "None",
+        secure: true,
       });
 
       res.json({ accessToken });
@@ -68,7 +69,9 @@ const userControl = {
       res.cookie("refreshtoken", refreshToken, {
         httpOnly: true,
         path: "/user/refresh_token",
-        maxAge: 7 * 24 * 60 * 60 * 1000,
+        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+        sameSite: "None",
+        secure: true,
       });
 
       res.json({ accessToken });
@@ -260,7 +263,7 @@ const userControl = {
         expiresIn: "15m",
       });
 
-      console.log("token: ",token)
+      console.log("token: ", token);
 
       const resetLink = `http://localhost:3000/reset_password/${token}`;
 
@@ -300,7 +303,6 @@ const userControl = {
       res.status(500).json({ msg: "Invalid or expired token." });
     }
   },
-  
 };
 
 module.exports = userControl;

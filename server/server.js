@@ -27,13 +27,15 @@ const generateOrderNumber = () =>
   Math.floor(100 + Math.random() * 900);
 
 // Middleware
-app.use(cors({
-  origin: ['https://main.d1b1b2mnj76860.amplifyapp.com'],
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-}));
-
+app.use(
+  cors({
+    origin: [
+      "http://localhost:3000",
+      "https://main.d1b1b2mnj76860.amplifyapp.com",
+    ],
+    credentials: true,
+  })
+);
 
 app.post(
   "/webhook",
