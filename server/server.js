@@ -330,14 +330,15 @@ app.post("/api/checkout-cart", async (req, res) => {
     }));
 
     tempCartByEmail[email] = cart;
-
+    const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:3000";
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       mode: "payment",
       customer_email: email,
       line_items,
-      success_url: "http://localhost:3000/success",
-      cancel_url: "http://localhost:3000/cancel",
+      
+      success_url: `${FRONTEND_URL}/success`,
+      cancel_url: `${FRONTEND_URL}/cancel`,
 
       payment_intent_data: {
         metadata: {
