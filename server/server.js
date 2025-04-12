@@ -29,10 +29,7 @@ const generateOrderNumber = () =>
 // Middleware
 app.use(
   cors({
-    origin: [
-      "http://localhost:3000",
-      "https://main.d1b1b2mnj76860.amplifyapp.com"
-    ],
+    origin: ["https://www.shopscout.org"],
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"], // ✅ include PATCH
     allowedHeaders: ["Content-Type", "Authorization"]
