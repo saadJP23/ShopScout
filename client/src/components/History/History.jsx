@@ -8,7 +8,8 @@ const History = () => {
   const state = useContext(GlobalState);
   const [token] = state.token;
   const [isLogged] = state.userAPI.isLogged;
-  const BASE_URL = 'https://shopscout-production-7795.up.railway.app';
+  const BASE_URL = "https://api.shopscout.org";
+
 
 
   useEffect(() => {

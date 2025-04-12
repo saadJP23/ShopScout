@@ -4,7 +4,8 @@ import axios from 'axios'
 import LoadingSpinner from "../LoadingSpinner";
 
 const Contact = () => {
-  const BASE_URL = 'https://shopscout-production-7795.up.railway.app';
+  const BASE_URL = "https://api.shopscout.org";
+
   const [loading, setLoading] = useState(false)
   
   const [formData, setFormData] = useState({

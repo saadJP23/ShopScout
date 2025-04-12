@@ -10,7 +10,8 @@ const Edit = () => {
   const navigate = useNavigate();
   const state = useContext(GlobalState);
   const [callback, setCallback] = state.productsAPI.callback;
-  const BASE_URL = 'https://shopscout-production-7795.up.railway.app';
+  const BASE_URL = "https://api.shopscout.org";
+
 
 
   const [product, setProduct] = useState({

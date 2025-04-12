@@ -7,7 +7,8 @@ export const GlobalState = createContext();
 
 export const DataProvider = ({ children }) => {
   const [token, setToken] = useState(false);
-  const BASE_URL = "https://shopscout-production-7795.up.railway.app";
+  const BASE_URL = "https://api.shopscout.org";
+
 
   const refreshToken = async () => {
     try {

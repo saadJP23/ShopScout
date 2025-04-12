@@ -5,7 +5,8 @@ import LoadingSpinner from '../../components/LoadingSpinner'
 
 const Login = () => {
 
-  const BASE_URL = 'https://shopscout-production-7795.up.railway.app';
+  const BASE_URL = "https://api.shopscout.org";
+
 
   const [loading, setLoading] = useState(false);
   

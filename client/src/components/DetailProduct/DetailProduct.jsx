@@ -12,7 +12,8 @@ const DetailProduct = () => {
   const [detailProduct, setDetailProduct] = useState(null);
   const [mainImage, setMainImage] = useState("");
   const addCart = state.userAPI.addCart;
-  const BASE_URL = 'https://shopscout-production-7795.up.railway.app';
+  const BASE_URL = "https://api.shopscout.org";
+
 
 
   useEffect(() => {

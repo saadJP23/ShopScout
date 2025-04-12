@@ -8,7 +8,8 @@ const ManageProduct = () => {
   const state = useContext(GlobalState);
   const [products, setProducts] = state.productsAPI.products;
   const [callback, setCallback] = state.productsAPI.callback;
-  const BASE_URL = 'https://shopscout-production-7795.up.railway.app';
+  const BASE_URL = "https://api.shopscout.org";
+
 
 
   useEffect(() => {

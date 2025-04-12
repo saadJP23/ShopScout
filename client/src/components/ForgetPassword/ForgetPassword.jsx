@@ -7,7 +7,8 @@ import LoadingSpinner from "../LoadingSpinner";
 const ForgetPassword = () => {
   const [email, setEmail] = useState("");
   const [msg, setMsg] = useState("");
-  const BASE_URL = 'https://shopscout-production-7795.up.railway.app';
+  const BASE_URL = "https://api.shopscout.org";
+
   const [loading, setLoading] = useState(false);
 
 

@@ -8,7 +8,8 @@ const ResetPassword = () => {
   const [msg, setMsg] = useState("");
   const { token } = useParams();
   const navigate = useNavigate();
-  const BASE_URL = 'https://shopscout-production-7795.up.railway.app';
+  const BASE_URL = "https://api.shopscout.org";
+
 
 
   const handleSubmit = async (e) => {

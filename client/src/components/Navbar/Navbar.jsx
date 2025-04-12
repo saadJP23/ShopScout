@@ -13,7 +13,8 @@ const Navbar = () => {
   const [cart, setCart] = state.userAPI.cart;
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
-  const BASE_URL = 'https://shopscout-production-7795.up.railway.app';
+  const BASE_URL = "https://api.shopscout.org";
+
 
 
   const logoutUser = async () => {
