@@ -9,7 +9,7 @@ const UserAPI = (token) => {
     name: "",
     email: "",
   });
-  const BASE_URL = 'https://shopscout-production-7795.up.railway.app';
+  const BASE_URL = "https://shopscout-production-7795.up.railway.app";
 
   useEffect(() => {
     if (token) {
@@ -48,9 +48,13 @@ const UserAPI = (token) => {
     const alreadyInCart = cart.some(
       (item) => item._id === product.productId && item.size === product.size
     );
-    if (alreadyInCart) return alert("This product with the same size is already in the cart.");
+    if (alreadyInCart)
+      return alert("This product with the same size is already in the cart.");
 
-    const updatedCart = [...cart, { ...product, quantity: 1, productId: product._id || product.id }];
+    const updatedCart = [
+      ...cart,
+      { ...product, quantity: 1, productId: product._id || product.id },
+    ];
 
     setCart(updatedCart);
 
@@ -60,7 +64,6 @@ const UserAPI = (token) => {
         quantity: item.quantity,
         size: item.size,
       }));
-      
 
       await axios.patch(
         `${BASE_URL}/user/addcart`,
