@@ -6,7 +6,7 @@ import { GlobalState } from "../../../../GlobalState";
 import axios from "axios";
 import LoadingSpinner from "../../../../components/LoadingSpinner";
 
-const ProductLists = ({ products, loading }) => {
+const ProductLists = ({ products, loading, spaced }) => {
   const state = useContext(GlobalState);
   const addCart = state.userAPI.addCart;
   const [showSizeModal, setShowSizeModal] = useState(false);
