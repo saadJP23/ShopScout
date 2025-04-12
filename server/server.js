@@ -281,11 +281,11 @@ app.post("/api/checkout-single", async (req, res) => {
       mode: "payment",
       customer_email: product.email,
       line_items,
-      discounts: [
-        {
-          coupon: "100_OFF", // Replace with your actual 100% off coupon ID from Stripe
-        },
-      ],
+      // discounts: [
+      //   {
+      //     coupon: "100_OFF", // Replace with your actual 100% off coupon ID from Stripe
+      //   },
+      // ],
       success_url: `${FRONTEND_URL}/success`,
       cancel_url: `${FRONTEND_URL}/cancel`,
       allow_promotion_codes: true,
@@ -337,11 +337,11 @@ app.post("/api/checkout-cart", async (req, res) => {
       mode: "payment",
       customer_email: email,
       line_items,
-      discounts: [
-        {
-          coupon: "100_OFF", // Replace with your actual 100% off coupon ID from Stripe
-        },
-      ],
+      // discounts: [
+      //   {
+      //     coupon: "100_OFF", // Replace with your actual 100% off coupon ID from Stripe
+      //   },
+      // ],
       
       success_url: `${FRONTEND_URL}/success`,
       cancel_url: `${FRONTEND_URL}/cancel`,
