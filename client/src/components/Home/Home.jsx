@@ -1,15 +1,17 @@
 // Redesigned Home.jsx with enhanced styling, consistent cards, and call-to-actions
 
-import React from "react";
+import React, { useState } from "react";
 import "./Home.css";
 import { Link } from "react-router-dom";
 import ProductLists from "../mainpages/utils/ProductList/ProductLists";
 import { GlobalState } from "../../GlobalState";
 import { useContext } from "react";
+import LoadingSpinner from "../LoadingSpinner";
 
 const Home = () => {
   const state = useContext(GlobalState);
   const [products] = state.productsAPI.products;
+  const [loading, setLoading] = useState(false);
 
   return (
     <div className="homepage">
@@ -50,26 +52,41 @@ const Home = () => {
       </section>
 
       {/* Featured Products */}
-      <section className="product-section">
-        <h2>Featured Products</h2>
-        <p className="subtitle">Top picks for this season</p>
-        <div className="products_container">
-          {products.slice(0, 4).map((product) => (
-            <ProductLists key={product.id} products={product} spaced={false}/>
-          ))}
-        </div>
-      </section>
+      {loading ? (
+        <LoadingSpinner />
+      ) : (
+        <>
+          {/* Featured Products */}
+          <section className="product-section">
+            <h2>Featured Products</h2>
+            <p className="subtitle">Top picks for this season</p>
+            <div className="products_container">
+              {products.slice(0, 4).map((product) => (
+                <ProductLists
+                  key={product.id}
+                  products={product}
+                  spaced={false}
+                />
+              ))}
+            </div>
+          </section>
 
-      {/* New Arrivals */}
-      <section className="product-section">
-        <h2>New Arrivals</h2>
-        <p className="subtitle">Fresh designs just dropped</p>
-        <div className="products_container">
-          {products.slice(8, 12).map((product) => (
-            <ProductLists key={product.id} products={product} spaced={false}/>
-          ))}
-        </div>
-      </section>
+          {/* New Arrivals */}
+          <section className="product-section">
+            <h2>New Arrivals</h2>
+            <p className="subtitle">Fresh designs just dropped</p>
+            <div className="products_container">
+              {products.slice(8, 12).map((product) => (
+                <ProductLists
+                  key={product.id}
+                  products={product}
+                  spaced={false}
+                />
+              ))}
+            </div>
+          </section>
+        </>
+      )}
 
       {/* Offer Banner */}
       <section className="offer-banner">
