@@ -290,7 +290,7 @@ app.post("/api/checkout-single", async (req, res) => {
       //   },
       // ],
       success_url: `https://www.shopscout.org/success`,
-      cancel_url: 'https://www.shopscout.org/cancel',
+      cancel_url: 'https://www.shopscout.org/',
 
       allow_promotion_codes: true,
 
