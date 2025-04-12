@@ -58,6 +58,7 @@ const DetailProduct = () => {
       ...detailProduct,
       productId: detailProduct._id || detailProduct.id,
       size: selectedSize,
+      quantity: 1,
     });
 
     setSelectedSize("");
@@ -107,8 +108,8 @@ const DetailProduct = () => {
                 : JSON.parse(detailProduct.sold || "[]");
 
               const soldCount =
-                soldArray.find((soldItem) => soldItem.size === s.size)
-                  ?.units || 0;
+                soldArray.find((soldItem) => soldItem.size === s.size)?.units ||
+                0;
 
               const remaining = parseInt(s.units) - soldCount;
               const isDisabled = remaining <= 0;
