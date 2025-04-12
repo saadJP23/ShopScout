@@ -274,6 +274,8 @@ app.post("/api/checkout-single", async (req, res) => {
       },
     ];
 
+    const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:3000";
+
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       mode: "payment",
@@ -284,8 +286,9 @@ app.post("/api/checkout-single", async (req, res) => {
           coupon: "COUPON_ID_100_OFF", // Replace with your actual 100% off coupon ID from Stripe
         },
       ],
-      success_url: "http://localhost:3000/success",
-      cancel_url: "http://localhost:3000/cancel",
+      success_url: `${FRONTEND_URL}/success`,
+      cancel_url: `${FRONTEND_URL}/cancel`,
+
       payment_intent_data: {
         metadata: {
           customer_email: product.email,
