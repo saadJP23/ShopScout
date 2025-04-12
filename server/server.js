@@ -289,8 +289,9 @@ app.post("/api/checkout-single", async (req, res) => {
       //     coupon: "100_OFF", // Replace with your actual 100% off coupon ID from Stripe
       //   },
       // ],
-      success_url: `${FRONTEND_URL}/success`,
-      cancel_url: `${FRONTEND_URL}/cancel`,
+      success_url: `https://www.shopscout.org/success`,
+      cancel_url: 'https://www.shopscout.org/cancel',
+
       allow_promotion_codes: true,
 
       payment_intent_data: {
@@ -346,8 +347,8 @@ app.post("/api/checkout-cart", async (req, res) => {
       //   },
       // ],
       
-      success_url: `${FRONTEND_URL}/success`,
-      cancel_url: `${FRONTEND_URL}/cancel`,
+      success_url: `https://www.shopscout.org//success`,
+      cancel_url: 'https://www.shopscout.org/',
       allow_promotion_codes: true,
 
       payment_intent_data: {
