@@ -106,45 +106,6 @@ const userControl = {
       return res.status(500).json({ msg: err.message });
     }
   },
-
-  // getUser: async (req, res) => {
-  //   console.log("Decoded user from JWT:", req.user);
-  //   try {
-  //     const user = await User.findByPk(req.user.id, {
-  //       include: [
-  //         {
-  //           model: CartItem,
-  //           include: [Product],
-  //         },
-  //       ],
-  //       attributes: { exclude: ['password'] },
-  //     });
-
-  //     if (!user) return res.status(400).json({ msg: "User Not Found" });
-
-  //     const cart = user.CartItems.map((item) => {
-  //       if (!item.Product) return null; // skip if product is missing
-
-  //       return {
-  //         quantity: item.quantity,
-  //         productId: item.productId,
-  //         product: item.Product,
-  //       };
-  //     }).filter(Boolean); // removes nulls
-  //     // Format cart to return product details + quantity
-
-  //     res.json({
-  //       id: user.id,
-  //       name: user.name,
-  //       email: user.email,
-  //       role: user.role,
-  //       history: user.history,
-  //       cart, // ✅ Include the cart
-  //     });
-  //   } catch (err) {
-  //     return res.status(500).json({ msg: err.message });
-  //   }
-  // },
   getUser: async (req, res) => {
     try {
       const user = await User.findByPk(req.user.id);
@@ -173,33 +134,6 @@ const userControl = {
       return res.status(500).json({ msg: err.message });
     }
   },
-  // addCart: async (req, res) => {
-  //   try {
-  //     const userId = req.user.id;
-  //     const cart = req.body.cart;
-
-  //     console.log(cart)
-  //     if (!cart || !Array.isArray(cart)) {
-  //       return res.status(400).json({ msg: "Invalid cart format" });
-  //     }
-
-  //     // Clear old cart
-  //     await CartItem.destroy({ where: { userId } });
-
-  //     // Rebuild cart
-  //     const newCart = cart.map((item) => ({
-  //       userId,
-  //       productId: item.productId,
-  //       quantity: item.quantity,
-  //       size: item.size || "",
-  //     }));
-
-  //     await CartItem.bulkCreate(newCart);
-  //     res.json({ msg: "Cart updated" });
-  //   } catch (err) {
-  //     return res.status(500).json({ msg: err.message });
-  //   }
-  // },
   addCart: async (req, res) => {
     try {
       const userId = req.user.id;
@@ -265,7 +199,7 @@ const userControl = {
 
       console.log("token: ", token);
 
-      const resetLink = `http://localhost:3000/reset_password/${token}`;
+      const resetLink = `https://main.d1b1b2mnj76860.amplifyapp.com/reset_password/${token}`;
 
       const transporter = nodemailer.createTransport({
         service: "gmail",
