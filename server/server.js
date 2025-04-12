@@ -283,7 +283,7 @@ app.post("/api/checkout-single", async (req, res) => {
       line_items,
       discounts: [
         {
-          coupon: "COUPON_ID_100_OFF", // Replace with your actual 100% off coupon ID from Stripe
+          coupon: "100_OFF", // Replace with your actual 100% off coupon ID from Stripe
         },
       ],
       success_url: `${FRONTEND_URL}/success`,
@@ -339,7 +339,7 @@ app.post("/api/checkout-cart", async (req, res) => {
       line_items,
       discounts: [
         {
-          coupon: "COUPON_ID_100_OFF", // Replace with your actual 100% off coupon ID from Stripe
+          coupon: "100_OFF", // Replace with your actual 100% off coupon ID from Stripe
         },
       ],
       
