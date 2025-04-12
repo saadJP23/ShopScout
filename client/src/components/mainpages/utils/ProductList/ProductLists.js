@@ -4,29 +4,27 @@ import "./productList.css";
 import { FaShoppingCart } from "react-icons/fa";
 import { GlobalState } from "../../../../GlobalState";
 import axios from "axios";
+import LoadingSpinner from "../../../../components/LoadingSpinner";
 
-const ProductLists = ({ products, spaced }) => {
+const ProductLists = ({ products, loading }) => {
   const state = useContext(GlobalState);
   const addCart = state.userAPI.addCart;
   const [showSizeModal, setShowSizeModal] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [selectedSize, setSelectedSize] = useState("");
-  const BASE_URL = 'https://shopscout-production-7795.up.railway.app';
 
+  const BASE_URL = "https://shopscout-production-7795.up.railway.app";
 
   const handleBuyNow = async (product) => {
     try {
       const userEmail = localStorage.getItem("userEmail");
-      const res = await axios.post(
-        `${BASE_URL}/api/checkout-single`,
-        {
-          product: {
-            title: product.title,
-            price: product.price,
-            email: userEmail,
-          },
-        }
-      );
+      const res = await axios.post(`${BASE_URL}/api/checkout-single`, {
+        product: {
+          title: product.title,
+          price: product.price,
+          email: userEmail,
+        },
+      });
 
       window.location.href = res.data.url;
     } catch (err) {
@@ -57,6 +55,7 @@ const ProductLists = ({ products, spaced }) => {
 
   return (
     <>
+    {loading && <LoadingSpinner />}
       <div className={`product-cart ${spaced ? "with-spacing" : ""}`}>
         <div className="product_card_alt">
           <Link

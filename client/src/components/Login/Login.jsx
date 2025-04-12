@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
+import LoadingSpinner from '../../components/LoadingSpinner'
 
 const Login = () => {
 
   const BASE_URL = 'https://shopscout-production-7795.up.railway.app';
 
+  const [loading, setLoading] = useState(false);
   
   const [user, setUser] = useState({
     email:'',
@@ -21,6 +23,7 @@ const Login = () => {
     e.preventDefault()
   
     try{
+      setLoading(true)
       const res = await axios.post(`${BASE_URL}/user/login`, {...user}, { withCredentials: true })
 
       localStorage.setItem('firstLogin', true)
@@ -32,9 +35,14 @@ const Login = () => {
     catch(err){
       alert(err.response.data.msg)
     }
+    finally{
+      setLoading(false)
+    }
 }
 
   return (
+    <>
+    {loading && <LoadingSpinner />}
     <div className='login-page'>
     <h2>Login</h2>
       <form onSubmit={loginSubmit}>
@@ -49,6 +57,7 @@ const Login = () => {
         </div>
       </form>
     </div>
+    </>
   )
 }
 

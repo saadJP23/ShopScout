@@ -1,23 +1,30 @@
 import React, { useRef, useState } from "react";
 import "./Contact.css";
 import axios from 'axios'
+import LoadingSpinner from "../LoadingSpinner";
 
 const Contact = () => {
   const BASE_URL = 'https://shopscout-production-7795.up.railway.app';
-
+  const [loading, setLoading] = useState(false)
+  
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     message: ""
   });
   const handleSubmit = async (e) => {
+
     e.preventDefault();
     try {
+      setLoading(true)
       await axios.post(`${BASE_URL}/api/contact`, formData);
       alert("Message sent!");
       setFormData({ name: "", email: "", message: "" });
     } catch (err) {
       alert("Message failed to send.");
+    }
+    finally{
+      setLoading(false)
     }
   };
 
@@ -27,6 +34,7 @@ const Contact = () => {
   }
 
   return (
+
     <section id="contact">
       <div className="contact-container">
         <h2>Contact Us</h2>
@@ -35,6 +43,7 @@ const Contact = () => {
         <div className="contact-content">
           <div className="contact-form">
             <h3>Send us a message</h3>
+            {loading && <LoadingSpinner />}
             <form onSubmit={handleSubmit}>
               <input type="text" name="name" placeholder="Your Name"  onChange={handleChange}  value={formData.name} required />
               <input type="email" name="email" placeholder="Your Email" onChange={handleChange}  value={formData.email} required />

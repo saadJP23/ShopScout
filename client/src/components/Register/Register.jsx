@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
+import LoadingSpinner from '../LoadingSpinner'
+
 
 const Register = () => {
 
   const BASE_URL = 'https://shopscout-production-7795.up.railway.app';
+  const [loading, setLoading] = useState(false);
 
   const [user, setUser] = useState({
     name:'',
@@ -21,6 +24,7 @@ const Register = () => {
     e.preventDefault()
   
     try{
+      setLoading(true)
       await axios.post(`${BASE_URL}/user/register`, {...user}, { withCredentials: true })
 
       
@@ -36,9 +40,14 @@ const Register = () => {
     catch(err){
       alert(err.response.data.msg)
     }
+    finally{
+      setLoading(false)
+    }
 }
 
   return (
+    <>
+    {loading && <LoadingSpinner />}
     <div className='register-page'>
     <h2>Register</h2>
       <form onSubmit={registerSubmit}>
@@ -53,6 +62,7 @@ const Register = () => {
         </div>
       </form>
     </div>
+    </>
   )
 }
 

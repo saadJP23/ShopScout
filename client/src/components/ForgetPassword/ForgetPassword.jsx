@@ -2,16 +2,19 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import "./ForgetPassword.css";
+import LoadingSpinner from "../LoadingSpinner";
 
 const ForgetPassword = () => {
   const [email, setEmail] = useState("");
   const [msg, setMsg] = useState("");
   const BASE_URL = 'https://shopscout-production-7795.up.railway.app';
+  const [loading, setLoading] = useState(false);
 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setLoading(true)
       const res = await axios.post(`${BASE_URL}/user/forget_password`, {
         email,
       });
@@ -19,9 +22,14 @@ const ForgetPassword = () => {
     } catch (err) {
       setMsg(err.response?.data?.msg || "Something went wrong");
     }
+    finally{
+      setLoading(false)
+    }
   };
 
   return (
+    <>
+    {loading && <LoadingSpinner />}
     <div className="forgot-page">
       <div className="forgot-container">
         <h2>Forgot Password</h2>
@@ -48,6 +56,7 @@ const ForgetPassword = () => {
         )}
       </div>
     </div>
+    </>
   );
 };
 
