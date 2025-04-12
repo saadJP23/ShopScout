@@ -168,3 +168,30 @@
     gap: 1rem;
   }
 }
+
+/* Size Selector */
+.size-select {
+  margin-top: 1.5rem;
+  text-align: left;
+}
+
+.size-select label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.size-select select {
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.size-select select:focus {
+  border-color: #0f766e;
+}

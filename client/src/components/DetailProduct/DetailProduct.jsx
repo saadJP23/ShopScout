@@ -11,10 +11,9 @@ const DetailProduct = () => {
   const [products] = state.productsAPI.products;
   const [detailProduct, setDetailProduct] = useState(null);
   const [mainImage, setMainImage] = useState("");
+  const [selectedSize, setSelectedSize] = useState("");
   const addCart = state.userAPI.addCart;
   const BASE_URL = "https://api.shopscout.org";
-
-
 
   useEffect(() => {
     if (id && products.length > 0) {
@@ -49,6 +48,21 @@ const DetailProduct = () => {
     }
   };
 
+  const confirmAddToCart = () => {
+    if (!selectedSize) {
+      alert("Please select a size.");
+      return;
+    }
+
+    addCart({
+      ...detailProduct,
+      productId: detailProduct._id || detailProduct.id,
+      size: selectedSize,
+    });
+
+    setSelectedSize("");
+  };
+
   return (
     <div className="product-detail-page">
       <div className="product-gallery">
@@ -80,11 +94,39 @@ const DetailProduct = () => {
         <p className="product-description">{detailProduct.description}</p>
         <p className="product-content">{detailProduct.content}</p>
 
+        <div className="size-select">
+          <label>Select Size:</label>
+          <select
+            value={selectedSize}
+            onChange={(e) => setSelectedSize(e.target.value)}
+          >
+            <option value="">-- Choose Size --</option>
+            {detailProduct.sizes?.map((s, index) => {
+              const soldArray = Array.isArray(detailProduct.sold)
+                ? detailProduct.sold
+                : JSON.parse(detailProduct.sold || "[]");
+
+              const soldCount =
+                soldArray.find((soldItem) => soldItem.size === s.size)
+                  ?.units || 0;
+
+              const remaining = parseInt(s.units) - soldCount;
+              const isDisabled = remaining <= 0;
+
+              return (
+                <option key={index} value={s.size} disabled={isDisabled}>
+                  {s.size} ({remaining} left)
+                </option>
+              );
+            })}
+          </select>
+        </div>
+
         <div className="product-action-row">
           <button className="btn-buy-now" onClick={handleBuyNow}>
             Buy Now
           </button>
-          <button className="btn-add-cart" onClick={() => addCart(detailProduct)}>
+          <button className="btn-add-cart" onClick={confirmAddToCart}>
             <FaShoppingCart size={16} />
           </button>
         </div>
