@@ -179,6 +179,7 @@
   
   /* Ensure images are fully visible */
   .product-cart img {
+    background-color: white;
     width: 100%; /* Make sure the image fits the card */
     height: auto;
     object-fit: cover; /* Prevent distortion */
