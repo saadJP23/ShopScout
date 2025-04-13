@@ -73,6 +73,11 @@
   flex: 1;
 }
 
+.cart-details p {
+  text-align: left !important;
+}
+
+
 .cart-summary {
   max-width: 400px;
   margin: 30px auto;
