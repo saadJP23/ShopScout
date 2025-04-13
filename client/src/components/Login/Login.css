@@ -5,8 +5,8 @@
   background-color: #f7f7f7;
   flex-direction: column;
   gap: 1.5em; /* Reduced from 3em */
-  padding-top: 80px;
-  padding-bottom: 40px;
+  padding-top: 160px;
+  padding-bottom: 160px;
 }
 
 
