@@ -15,8 +15,6 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const BASE_URL = "https://api.shopscout.org";
 
-
-
   const logoutUser = async () => {
     await axios.get(`${BASE_URL}/user/logout`, {
       withCredentials: true,
@@ -31,23 +29,57 @@ const Navbar = () => {
 
   const adminRouter = () => (
     <>
-      <li><Link to="/admin/products">Manage Products</Link></li>
-      <li><Link to="/admin/create">Create Product</Link></li>
-      <li><Link to="/" onClick={() => { logoutUser(); setMenuOpen(false); }}>Logout</Link></li>
+      <li>
+        <Link to="/admin/products">Manage Products</Link>
+      </li>
+      <li>
+        <Link to="/admin/create">Create Product</Link>
+      </li>
+      <li>
+        <Link
+          to="/"
+          onClick={() => {
+            logoutUser();
+            setMenuOpen(false);
+          }}
+        >
+          Logout
+        </Link>
+      </li>
     </>
   );
 
   const loggedRouter = () => (
     <>
-      <li><Link to="/history" onClick={() => setMenuOpen(false)}>History</Link></li>
-      <li><Link to="/" onClick={() => { logoutUser(); setMenuOpen(false); }}>Logout</Link></li>
+      <li>
+        <Link to="/history" onClick={() => setMenuOpen(false)}>
+          History
+        </Link>
+      </li>
+      <li>
+        <Link
+          to="/"
+          onClick={() => {
+            logoutUser();
+            setMenuOpen(false);
+          }}
+        >
+          Logout
+        </Link>
+      </li>
       {!isAdmin && (
         <div className="dropdown">
           <span className="dropbtn">Category</span>
           <div className="dropdown-content">
-            <Link to="/category/male" onClick={() => setMenuOpen(false)}>Male</Link>
-            <Link to="/category/female" onClick={() => setMenuOpen(false)}>Female</Link>
-            <Link to="/category/child" onClick={() => setMenuOpen(false)}>Child</Link>
+            <Link to="/category/male" onClick={() => setMenuOpen(false)}>
+              Male
+            </Link>
+            <Link to="/category/female" onClick={() => setMenuOpen(false)}>
+              Female
+            </Link>
+            <Link to="/category/child" onClick={() => setMenuOpen(false)}>
+              Child
+            </Link>
           </div>
         </div>
       )}
@@ -63,7 +95,11 @@ const Navbar = () => {
               <div className="admin-box">Admin</div>
             ) : (
               <div className="logo-container">
-                <img src="/images/logo.png" alt="Mandala" className="glow-logo" />
+                <img
+                  src="/images/logo.png"
+                  alt="Mandala"
+                  className="glow-logo"
+                />
               </div>
             )}
           </Link>
@@ -78,24 +114,46 @@ const Navbar = () => {
             <ul className="flex items-center justify-center">
               {!isAdmin && (
                 <>
-                  <li><Link to="/view_all" onClick={() => setMenuOpen(false)}>View All Product</Link></li>
-                  <li><Link to="/contact" onClick={() => setMenuOpen(false)}>Contact Us</Link></li>
+                  <li>
+                    <Link to="/view_all" onClick={() => setMenuOpen(false)}>
+                      View All Product
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/contact" onClick={() => setMenuOpen(false)}>
+                      Contact Us
+                    </Link>
+                  </li>
                 </>
               )}
 
-              {isAdmin ? adminRouter() : isLogged ? loggedRouter() : (
+              {isAdmin ? (
+                adminRouter()
+              ) : isLogged ? (
+                loggedRouter()
+              ) : (
                 <>
-                  <li><Link to="/login" onClick={() => setMenuOpen(false)}>Login</Link></li>
-                  <li><Link to="/register" onClick={() => setMenuOpen(false)}>Register</Link></li>
+                  <li>
+                    <Link to="/login" onClick={() => setMenuOpen(false)}>
+                      Login
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/register" onClick={() => setMenuOpen(false)}>
+                      Register
+                    </Link>
+                  </li>
                 </>
               )}
 
-              {!isAdmin && (
+              {isLogged && !isAdmin && (
                 <li className="cart-mobile">
                   <Link to="/cart" onClick={() => setMenuOpen(false)}>
                     <div className="cart-icon-wrapper">
                       <i className="fa-solid fa-bag-shopping"></i>
-                      <span className="count-badge">{cart?.reduce((t, i) => t + i.quantity, 0) || 0}</span>
+                      <span className="count-badge">
+                        {cart?.reduce((t, i) => t + i.quantity, 0) || 0}
+                      </span>
                     </div>
                   </Link>
                 </li>
