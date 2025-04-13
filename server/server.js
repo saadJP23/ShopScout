@@ -282,7 +282,8 @@ app.post("/api/checkout-single", async (req, res) => {
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       mode: "payment",
-      customer_email: product.email,
+      customer_creation: 'always', // OR remove `customer_email` and let user enter it manually
+
       line_items,
       // discounts: [
       //   {
@@ -296,7 +297,7 @@ app.post("/api/checkout-single", async (req, res) => {
 
       payment_intent_data: {
         metadata: {
-          customer_email: product.email,
+          customer_creation: 'always',
         },
       },
       billing_address_collection: "required",
@@ -339,7 +340,7 @@ app.post("/api/checkout-cart", async (req, res) => {
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       mode: "payment",
-      customer_email: email,
+      customer_creation: "always",
       line_items,
       // discounts: [
       //   {
@@ -353,7 +354,7 @@ app.post("/api/checkout-cart", async (req, res) => {
 
       payment_intent_data: {
         metadata: {
-          customer_email: email,
+          customer_creation: "always",
         },
       },
       billing_address_collection: "required",
