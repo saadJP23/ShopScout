@@ -76,7 +76,7 @@ const Home = () => {
             <h2>New Arrivals</h2>
             <p className="subtitle">Fresh designs just dropped</p>
             <div className="products_container">
-              {products.slice(8, 12).map((product) => (
+              {products.slice(4, 8).map((product) => (
                 <ProductLists
                   key={product.id}
                   products={product}
