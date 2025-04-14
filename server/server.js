@@ -15,7 +15,10 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const cloudinary = require("cloudinary").v2;
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
 const bodyParser = require("body-parser");
+
+
 let tempCartByEmail = {};
+
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -54,9 +57,9 @@ app.post("/api/sync-printful-products", async (req, res) => {
         description: "Imported via Printful API",
         brand: "Printful",
         images: [product.thumbnail_url],
-        category: "POD",
+        category: "child",
         season: "all",
-        sizes: ["S", "M", "L"], // ✅ Replace based on variant data if needed
+        sizes: [{"size": "S", "units": "3"}, {"size": "M", "units": "3"}, {"size": "L", "units": "3"}], // ✅ Replace based on variant data if needed
       });
 
       createdProducts.push(newProduct);
@@ -72,6 +75,33 @@ app.post("/api/sync-printful-products", async (req, res) => {
   }
 });
 
+app.post("/api/sync-printful-detailed/:productId", async (req, res) => {
+  const { productId } = req.params;
+
+  try {
+    const response = await printful.get(`/store/products/${productId}`);
+    const formatted = transformPrintfulData(response.data);
+
+    const existing = await Product.findOne({
+      where: { product_unique_id: formatted.product_unique_id }
+    });
+
+    if (existing) {
+      return res.status(200).json({ message: "✅ Product already exists", product: existing });
+    }
+
+    const newProduct = await Product.create({
+      ...formatted,
+      images: JSON.stringify(formatted.images),
+      sizes: JSON.stringify(formatted.sizes)
+    });
+
+    res.status(201).json({ message: "✅ Detailed Printful product saved", product: newProduct });
+  } catch (err) {
+    console.error("❌ Error syncing detailed Printful data:", err.message);
+    res.status(500).json({ error: "Failed to sync detailed product" });
+  }
+});
 
 
 const generateOrderNumber = () =>
@@ -278,8 +308,33 @@ app.use("/user", require("./routes/userRouter"));
 app.use("/api", require("./routes/categoryRouter"));
 app.use("/api", require("./routes/productRouter"));
 app.use("/api/upload", require("./routes/upload"));
+app.use("/", require("./syncPrintfulVariants"));
+
+
+
+
+function transformPrintfulData(response) {
+  const product = response.result.sync_product;
+  const variants = response.result.sync_variants;
+
+  return {
+    product_unique_id: product.external_id,
+    product_id: String(product.id),
+    title: product.name,
+    description: "Imported via Printful API",
+    price: variants[0].retail_price,
+    brand: "Printful",
+    images: variants.map(v => v.product.image),
+    category: "male", // or detect from product name
+    season: "winter",
+    sizes: variants.map(v => ({ size: v.size, units: "3" }))
+  };
+}
+
+
 
 // Contact
+
 app.post("/api/contact", async (req, res) => {
   const { name, email, message } = req.body;
 
