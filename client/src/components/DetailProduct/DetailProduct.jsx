@@ -116,7 +116,7 @@ const DetailProduct = () => {
 
               return (
                 <option key={index} value={s.size} disabled={isDisabled}>
-                  {s.size} ({remaining} left)
+                  {s.size}
                 </option>
               );
             })}
