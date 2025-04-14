@@ -62,7 +62,7 @@ router.post("/api/sync-printful-detailed", async (req, res) => {
         price: parseFloat(data.variants[0]?.retail_price || 2999),
         description: "Imported via Printful API",
         brand: "Printful",
-        images: [data.thumbnail_url],
+        images: JSON.stringify([data.thumbnail_url]),
         category,
         season: "all",
         sizes,
