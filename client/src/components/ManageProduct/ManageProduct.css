@@ -115,3 +115,10 @@
 .delete-btn:hover {
   background-color: #b91c1c;
 }
+
+.loading-msg {
+  text-align: center;
+  font-size: 1.2rem;
+  margin-top: 2rem;
+  color: #ccc;
+}
