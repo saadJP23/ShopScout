@@ -20,6 +20,60 @@ let tempCartByEmail = {};
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+const printful = require("./printful");
+
+app.get("/api/printful-products", async (req, res) => {
+  try {
+    const response = await printful.get("/store/products");
+    res.json(response.data);
+  } catch (err) {
+    console.error("❌ Printful API Error:", err.response?.data || err.message);
+    res.status(500).json({ error: "Printful API failed" });
+  }
+});
+
+app.post("/api/sync-printful-products", async (req, res) => {
+  try {
+    const response = await printful.get("/store/products");
+    const products = response.data.result;
+
+    const createdProducts = [];
+
+    for (const product of products) {
+      const existing = await Product.findOne({
+        where: { product_unique_id: product.external_id },
+      });
+
+      if (existing) continue; // Skip duplicates
+
+      const newProduct = await Product.create({
+        product_unique_id: product.external_id,
+        product_id: String(product.id),
+        title: product.name,
+        price: 2999, // ✅ Replace with actual or placeholder
+        description: "Imported via Printful API",
+        brand: "Printful",
+        images: [product.thumbnail_url],
+        category: "POD",
+        season: "all",
+        sizes: ["S", "M", "L"], // ✅ Replace based on variant data if needed
+      });
+
+      createdProducts.push(newProduct);
+    }
+
+    res.status(200).json({
+      message: `✅ Synced ${createdProducts.length} new products from Printful.`,
+      synced: createdProducts,
+    });
+  } catch (err) {
+    console.error("❌ Failed to sync Printful products:", err.message);
+    res.status(500).json({ error: "Sync failed" });
+  }
+});
+
+
+
 const generateOrderNumber = () =>
   "ORD-" +
   Date.now().toString().slice(-6) +
