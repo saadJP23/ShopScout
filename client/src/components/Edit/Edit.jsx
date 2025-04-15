@@ -57,7 +57,7 @@ const Edit = () => {
       } catch (err) {
         console.error("Error fetching product:", err);
       } finally {
-        setLoading(true);
+        setLoading(false);
       }
     };
 
