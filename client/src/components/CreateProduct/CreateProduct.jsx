@@ -10,8 +10,7 @@ const CreateProduct = () => {
   const state = useContext(GlobalState);
   const [callback, setCallback] = state.productsAPI.callback;
   const BASE_URL = "https://api.shopscout.org";
-  const [loading, setLoading] = useState(false)
-
+  const [loading, setLoading] = useState(false);
 
   const [product, setProduct] = useState({
     product_unique_id: uuidv4(),
@@ -60,13 +59,9 @@ const CreateProduct = () => {
       formData.append("file", file);
 
       try {
-        const res = await axios.post(
-          `${BASE_URL}/api/upload`,
-          formData,
-          {
-            headers: { "content-type": "multipart/form-data" },
-          }
-        );
+        const res = await axios.post(`${BASE_URL}/api/upload`, formData, {
+          headers: { "content-type": "multipart/form-data" },
+        });
         uploadedImages.push(res.data);
       } catch (err) {
         alert("Image upload failed");
@@ -83,7 +78,7 @@ const CreateProduct = () => {
     if (!images) return alert("Please upload an image");
 
     try {
-      setLoading(true)
+      setLoading(true);
       const res = await axios.post(`${BASE_URL}/api/products`, {
         ...product,
         images,
@@ -95,122 +90,129 @@ const CreateProduct = () => {
     } catch (err) {
       alert(err.response?.data?.msg || "Failed to create product");
       console.error(err);
-    }
-    finally{
-      setLoading(false)
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="create-product">
-      <h2>Create New Product</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="product_id"
-          placeholder="Product ID"
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="text"
-          name="title"
-          placeholder="Title"
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="number"
-          name="price"
-          placeholder="Price"
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="text"
-          name="brand"
-          placeholder="Brand"
-          onChange={handleChange}
-          required
-        />
-        <textarea
-          name="description"
-          placeholder="Short description"
-          onChange={handleChange}
-          required
-        />
-
-        <h4>Sizes and Units</h4>
-        {product.sizes.map((item, index) => (
-          <div key={index} className="size-unit-row">
-            <select
-              name="size"
-              value={item.size}
-              onChange={(e) => handleSizeChange(e, index)}
+      {loading ? (
+        <p style={{ textAlign: "center", fontSize: "18px" }}>
+          Creating product...
+        </p>
+      ) : (
+        <>
+          <h2>Create New Product</h2>
+          <form onSubmit={handleSubmit}>
+            <input
+              type="text"
+              name="product_id"
+              placeholder="Product ID"
+              onChange={handleChange}
               required
-            >
-              <option value="">Select Size</option>
-              <option value="S">S</option>
-              <option value="M">M</option>
-              <option value="L">L</option>
-            </select>
-
+            />
+            <input
+              type="text"
+              name="title"
+              placeholder="Title"
+              onChange={handleChange}
+              required
+            />
             <input
               type="number"
-              name="units"
-              placeholder="Units"
-              value={item.units}
-              onChange={(e) => handleSizeChange(e, index)}
+              name="price"
+              placeholder="Price"
+              onChange={handleChange}
+              required
+            />
+            <input
+              type="text"
+              name="brand"
+              placeholder="Brand"
+              onChange={handleChange}
+              required
+            />
+            <textarea
+              name="description"
+              placeholder="Short description"
+              onChange={handleChange}
               required
             />
 
-            <button type="button" onClick={() => removeSizeRow(index)}>
-              Remove
-            </button>
-          </div>
-        ))}
+            <h4>Sizes and Units</h4>
+            {product.sizes.map((item, index) => (
+              <div key={index} className="size-unit-row">
+                <select
+                  name="size"
+                  value={item.size}
+                  onChange={(e) => handleSizeChange(e, index)}
+                  required
+                >
+                  <option value="">Select Size</option>
+                  <option value="S">S</option>
+                  <option value="M">M</option>
+                  <option value="L">L</option>
+                </select>
 
-        <button type="button" onClick={addSizeRow}>
-          + Add Size
-        </button>
+                <input
+                  type="number"
+                  name="units"
+                  placeholder="Units"
+                  value={item.units}
+                  onChange={(e) => handleSizeChange(e, index)}
+                  required
+                />
 
-        <select
-          name="category"
-          value={product.category}
-          onChange={handleChange}
-          required
-        >
-          <option value="">Select Category</option>
-          <option value="male">Male</option>
-          <option value="female">Female</option>
-          <option value="unisex">Unisex</option>
-          <option value="child">Infant</option>
-        </select>
-
-        <select
-          name="season"
-          value={product.season}
-          onChange={handleChange}
-          required
-        >
-          <option value="">Select Season</option>
-          <option value="summer">Summer</option>
-          <option value="winter">Winter</option>
-          <option value="spring">Spring</option>
-          <option value="autumn">Autumn</option>
-        </select>
-
-        <input type="file" multiple onChange={handleUpload} />
-        {imagePreview.length > 0 && (
-          <div className="preview-grid">
-            {imagePreview.map((url, idx) => (
-              <img key={idx} src={url} alt={`Preview ${idx}`} width="150" />
+                <button type="button" onClick={() => removeSizeRow(index)}>
+                  Remove
+                </button>
+              </div>
             ))}
-          </div>
-        )}
 
-        <button type="submit">Create Product</button>
-      </form>
+            <button type="button" onClick={addSizeRow}>
+              + Add Size
+            </button>
+
+            <select
+              name="category"
+              value={product.category}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Select Category</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="unisex">Unisex</option>
+              <option value="child">Infant</option>
+            </select>
+
+            <select
+              name="season"
+              value={product.season}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Select Season</option>
+              <option value="summer">Summer</option>
+              <option value="winter">Winter</option>
+              <option value="spring">Spring</option>
+              <option value="autumn">Autumn</option>
+            </select>
+
+            <input type="file" multiple onChange={handleUpload} />
+            {imagePreview.length > 0 && (
+              <div className="preview-grid">
+                {imagePreview.map((url, idx) => (
+                  <img key={idx} src={url} alt={`Preview ${idx}`} width="150" />
+                ))}
+              </div>
+            )}
+
+            <button type="submit">Create Product</button>
+          </form>
+        </>
+      )}
     </div>
   );
 };

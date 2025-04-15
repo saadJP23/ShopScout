@@ -11,8 +11,7 @@ const Edit = () => {
   const state = useContext(GlobalState);
   const [callback, setCallback] = state.productsAPI.callback;
   const BASE_URL = "https://api.shopscout.org";
-
-
+  const [loading, setLoading] = useState(false);
 
   const [product, setProduct] = useState({
     title: "",
@@ -30,6 +29,7 @@ const Edit = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
+        setLoading(true);
         const res = await axios.get(`${BASE_URL}/api/products`);
         const productToEdit = res.data.products.find(
           (p) => p.id === parseInt(id)
@@ -56,6 +56,8 @@ const Edit = () => {
         );
       } catch (err) {
         console.error("Error fetching product:", err);
+      } finally {
+        setLoading(true);
       }
     };
 
@@ -102,13 +104,9 @@ const Edit = () => {
       formData.append("file", file);
 
       try {
-        const res = await axios.post(
-          `${BASE_URL}/api/upload`,
-          formData,
-          {
-            headers: { "content-type": "multipart/form-data" },
-          }
-        );
+        const res = await axios.post(`${BASE_URL}/api/upload`, formData, {
+          headers: { "content-type": "multipart/form-data" },
+        });
         uploadedImages.push(res.data);
       } catch (err) {
         alert("Image upload failed");
@@ -142,110 +140,117 @@ const Edit = () => {
   return (
     <div className="create-product">
       <h2>Edit Product</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="title"
-          value={product.title}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="number"
-          name="price"
-          value={product.price}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="text"
-          name="brand"
-          value={product.brand}
-          onChange={handleChange}
-          required
-        />
-        <textarea
-          name="description"
-          value={product.description}
-          onChange={handleChange}
-          required
-        />
 
-        <h4>Sizes and Units</h4>
-        {product.sizes.map((item, index) => (
-          <div key={index} className="size-unit-row">
-            <select
-              name="size"
-              value={item.size}
-              onChange={(e) => handleSizeChange(e, index)}
-              required
-            >
-              <option value="">Select Size</option>
-              <option value="S">S</option>
-              <option value="M">M</option>
-              <option value="L">L</option>
-            </select>
+      {loading ? (
+        <p style={{ textAlign: "center", fontSize: "18px" }}>
+          Loading product...
+        </p>
+      ) : (
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            name="title"
+            value={product.title}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="number"
+            name="price"
+            value={product.price}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="text"
+            name="brand"
+            value={product.brand}
+            onChange={handleChange}
+            required
+          />
+          <textarea
+            name="description"
+            value={product.description}
+            onChange={handleChange}
+            required
+          />
 
-            <input
-              type="number"
-              name="units"
-              placeholder="Units"
-              value={item.units}
-              onChange={(e) => handleSizeChange(e, index)}
-              required
-            />
+          <h4>Sizes and Units</h4>
+          {product.sizes.map((item, index) => (
+            <div key={index} className="size-unit-row">
+              <select
+                name="size"
+                value={item.size}
+                onChange={(e) => handleSizeChange(e, index)}
+                required
+              >
+                <option value="">Select Size</option>
+                <option value="S">S</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+              </select>
 
-            <button type="button" onClick={() => removeSizeRow(index)}>
-              Remove
-            </button>
-          </div>
-        ))}
-        <button type="button" onClick={addSizeRow}>
-          + Add Size
-        </button>
+              <input
+                type="number"
+                name="units"
+                placeholder="Units"
+                value={item.units}
+                onChange={(e) => handleSizeChange(e, index)}
+                required
+              />
 
-        <select
-          name="category"
-          value={product.category}
-          onChange={handleChange}
-          required
-        >
-          <option value="">Select Category</option>
-          <option value="male">Male</option>
-          <option value="female">Female</option>
-          <option value="unisex">Unisex</option>
-          <option value="child">Child</option>
-        </select>
+              <button type="button" onClick={() => removeSizeRow(index)}>
+                Remove
+              </button>
+            </div>
+          ))}
+          <button type="button" onClick={addSizeRow}>
+            + Add Size
+          </button>
 
-        <select
-          name="season"
-          value={product.season}
-          onChange={handleChange}
-          required
-        >
-          <option value="">Select Season</option>
-          <option value="summer">Summer</option>
-          <option value="winter">Winter</option>
-          <option value="spring">Spring</option>
-          <option value="autumn">Autumn</option>
-        </select>
+          <select
+            name="category"
+            value={product.category}
+            onChange={handleChange}
+            required
+          >
+            <option value="">Select Category</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="unisex">Unisex</option>
+            <option value="child">Child</option>
+          </select>
 
-        <input type="file" multiple onChange={handleUpload} />
-        {imagePreview.length > 0 && (
-          <div className="preview-grid">
-            {imagePreview.map((url, idx) => (
-              <div key={idx} className="preview-box">
-                <img src={url} alt={`preview-${idx}`} />
-                <button type="button" onClick={() => handleDeleteImage(idx)}>
-                  🗑
-                </button>
-              </div>
-            ))}
-          </div>
-        )}
+          <select
+            name="season"
+            value={product.season}
+            onChange={handleChange}
+            required
+          >
+            <option value="">Select Season</option>
+            <option value="summer">Summer</option>
+            <option value="winter">Winter</option>
+            <option value="spring">Spring</option>
+            <option value="autumn">Autumn</option>
+          </select>
 
-        <button type="submit">Update Product</button>
-      </form>
+          <input type="file" multiple onChange={handleUpload} />
+          {imagePreview.length > 0 && (
+            <div className="preview-grid">
+              {imagePreview.map((url, idx) => (
+                <div key={idx} className="preview-box">
+                  <img src={url} alt={`preview-${idx}`} />
+                  <button type="button" onClick={() => handleDeleteImage(idx)}>
+                    🗑
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+
+          <button type="submit">Update Product</button>
+        </form>
+      )}
     </div>
   );
 };
