@@ -10,6 +10,7 @@ const CreateProduct = () => {
   const state = useContext(GlobalState);
   const [callback, setCallback] = state.productsAPI.callback;
   const BASE_URL = "https://api.shopscout.org";
+  const [loading, setLoading] = useState(false)
 
 
   const [product, setProduct] = useState({
@@ -82,6 +83,7 @@ const CreateProduct = () => {
     if (!images) return alert("Please upload an image");
 
     try {
+      setLoading(true)
       const res = await axios.post(`${BASE_URL}/api/products`, {
         ...product,
         images,
@@ -93,6 +95,9 @@ const CreateProduct = () => {
     } catch (err) {
       alert(err.response?.data?.msg || "Failed to create product");
       console.error(err);
+    }
+    finally{
+      setLoading(false)
     }
   };
 
@@ -179,7 +184,7 @@ const CreateProduct = () => {
           <option value="male">Male</option>
           <option value="female">Female</option>
           <option value="unisex">Unisex</option>
-          <option value="child">Child</option>
+          <option value="child">Infant</option>
         </select>
 
         <select
