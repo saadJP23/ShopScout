@@ -20,6 +20,9 @@
     gap: 1em;
   }
   
+  .create-product p {
+    color: black;
+  }
   .create-product input[type="text"],
   .create-product input[type="number"],
   .create-product input[type="file"],
