@@ -10,12 +10,14 @@ const AdBanner = () => {
   }, []);
 
   return (
-    <ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2013433811287400"
-     data-ad-slot="9421866899"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
+    <ins
+      className="adsbygoogle"
+      style={{ display: "block" }}
+      data-ad-client="ca-pub-2013433811287400"
+      data-ad-slot="9421866899"
+      data-ad-format="auto"
+      data-full-width-responsive="true"
+    ></ins>
   );
 };
 

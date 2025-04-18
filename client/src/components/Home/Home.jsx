@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import ProductLists from "../mainpages/utils/ProductList/ProductLists";
 import { GlobalState } from "../../GlobalState";
 import { useContext } from "react";
-import AdBanner from '../../AdBanner'
+import AdBanner from "../../AdBanner"
 import LoadingSpinner from "../LoadingSpinner";
 
 
