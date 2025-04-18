@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 import ProductLists from "../mainpages/utils/ProductList/ProductLists";
 import { GlobalState } from "../../GlobalState";
 import { useContext } from "react";
-import LoadingSpinner from "../LoadingSpinner";
 
 const Home = () => {
   const state = useContext(GlobalState);
@@ -14,6 +13,9 @@ const Home = () => {
   const loading = state.productsAPI.loading
 
   return (
+    <>
+
+    <AdBanner />
     <div className="homepage">
       {/* Hero Section */}
       <section className="hero-section">
@@ -107,6 +109,7 @@ const Home = () => {
         </div>
       </section> */}
     </div>
+    </>
   );
 };
 

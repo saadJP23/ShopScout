@@ -12,12 +12,14 @@ const ProductLists = ({ products, spaced }) => {
   const [showSizeModal, setShowSizeModal] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [selectedSize, setSelectedSize] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const BASE_URL = "https://api.shopscout.org";
 
 
   const handleBuyNow = async (product) => {
     try {
+      setLoading(true);
       const userEmail = localStorage.getItem("userEmail");
       const res = await axios.post(`${BASE_URL}/api/checkout-single`, {
         product: {
@@ -30,6 +32,8 @@ const ProductLists = ({ products, spaced }) => {
       window.location.href = res.data.url;
     } catch (err) {
       console.error("Payment error:", err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -53,6 +57,14 @@ const ProductLists = ({ products, spaced }) => {
 
   console.log(products);
   // console.log('spaced: ', spaced)
+
+  if (loading) {
+    return (
+      <div className="loading-fullscreen">
+        <div className="spinner">Processing payment...</div>
+      </div>
+    );
+  }
 
   return (
     <>
