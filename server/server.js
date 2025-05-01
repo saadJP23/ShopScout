@@ -113,12 +113,13 @@ const generateOrderNumber = () =>
 // Middleware
 app.use(
   cors({
-    origin: "https://shopscout.org",
+    origin: "https://shopscout.org", // ✅ no trailing slash
     credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"], // ✅ include PATCH
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"]
   })
 );
+
 
 
 app.options("*", cors());
