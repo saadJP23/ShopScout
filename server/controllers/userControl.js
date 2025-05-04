@@ -199,7 +199,7 @@ const userControl = {
 
       console.log("token: ", token);
 
-      const resetLink = `https://main.d1b1b2mnj76860.amplifyapp.com/reset_password/${token}`;
+      const resetLink = `${process.env.FRONTEND_URL}/reset_password/${token}`;
 
       const transporter = nodemailer.createTransport({
         service: "gmail",
