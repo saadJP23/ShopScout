@@ -223,20 +223,25 @@ const userControl = {
   },
   resetPassword: async (req, res) => {
     const { token, newPassword } = req.body;
-
+  
     try {
+      console.log("➡️ Reset password called with token:", token);
       const decoded = jwt.verify(token, process.env.RESET_TOKEN_SECRET);
+      console.log("✅ Token decoded:", decoded);
+  
       const user = await User.findByPk(decoded.id);
       if (!user) return res.status(400).json({ msg: "Invalid token." });
-
+  
       const passwordHash = await bcrypt.hash(newPassword, 12);
       await user.update({ password: passwordHash });
-
+  
       res.json({ msg: "Password successfully updated!" });
     } catch (err) {
-      res.status(500).json({ msg: "Invalid or expired token." });
+      console.error("❌ Reset password error:", err.message);
+      res.status(500).json({ msg: "Reset password failed: " + err.message });
     }
-  },
+  }
+  
 };
 
 module.exports = userControl;
