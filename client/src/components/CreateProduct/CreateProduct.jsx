@@ -88,7 +88,7 @@ const CreateProduct = () => {
       });
 
       alert("Product created!");
-      window.location.href = "/"; // Navigate to homepage
+      window.location.href = "/";
     } catch (err) {
       alert(err.response?.data?.msg || "Failed to create product");
       console.error(err);
@@ -98,82 +98,84 @@ const CreateProduct = () => {
   };
 
   return (
-    <div className="container">
-      {loading && <p className="loading">Creating product...</p>}
+    <div className="create-product">
       <h2>Create New Product</h2>
-      <input
-        type="text"
-        placeholder="Product ID"
-        value={product.product_id}
-        onChange={(e) => handleChange("product_id", e.target.value)}
-      />
-      <input
-        type="text"
-        placeholder="Title"
-        value={product.title}
-        onChange={(e) => handleChange("title", e.target.value)}
-      />
-      <input
-        type="number"
-        placeholder="Price"
-        value={product.price}
-        onChange={(e) => handleChange("price", e.target.value)}
-      />
-      <input
-        type="text"
-        placeholder="Brand"
-        value={product.brand}
-        onChange={(e) => handleChange("brand", e.target.value)}
-      />
-      <textarea
-        placeholder="Short description"
-        value={product.description}
-        onChange={(e) => handleChange("description", e.target.value)}
-      />
+      <form>
+        <input
+          type="text"
+          placeholder="Product ID"
+          value={product.product_id}
+          onChange={(e) => handleChange("product_id", e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="Title"
+          value={product.title}
+          onChange={(e) => handleChange("title", e.target.value)}
+        />
+        <input
+          type="number"
+          placeholder="Price"
+          value={product.price}
+          onChange={(e) => handleChange("price", e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="Brand"
+          value={product.brand}
+          onChange={(e) => handleChange("brand", e.target.value)}
+        />
+        <textarea
+          placeholder="Short description"
+          value={product.description}
+          onChange={(e) => handleChange("description", e.target.value)}
+        />
 
-      <h4>Sizes and Units</h4>
-      {product.sizes.map((item, index) => (
-        <div className="size-unit-row" key={index}>
-          <input
-            type="text"
-            placeholder="Size"
-            value={item.size}
-            onChange={(e) => handleSizeChange(index, "size", e.target.value)}
-          />
-          <input
-            type="number"
-            placeholder="Units"
-            value={item.units}
-            onChange={(e) => handleSizeChange(index, "units", e.target.value)}
-          />
-          <button onClick={() => removeSizeRow(index)}>Remove</button>
-        </div>
-      ))}
-      <button onClick={addSizeRow}>+ Add Size</button>
-
-      <input
-        type="text"
-        placeholder="Category"
-        value={product.category}
-        onChange={(e) => handleChange("category", e.target.value)}
-      />
-      <input
-        type="text"
-        placeholder="Season"
-        value={product.season}
-        onChange={(e) => handleChange("season", e.target.value)}
-      />
-
-      <input type="file" multiple onChange={handleUpload} />
-      <div className="preview-grid">
-        {imagePreview.map((url, index) => (
-          <img key={index} src={url} alt="preview" className="preview-image" />
+        <p><strong>Sizes and Units:</strong></p>
+        {product.sizes.map((item, index) => (
+          <div key={index} className="size-unit-row">
+            <input
+              type="text"
+              placeholder="Size"
+              value={item.size}
+              onChange={(e) => handleSizeChange(index, "size", e.target.value)}
+            />
+            <input
+              type="number"
+              placeholder="Units"
+              value={item.units}
+              onChange={(e) => handleSizeChange(index, "units", e.target.value)}
+            />
+            <button type="button" onClick={() => removeSizeRow(index)}>Remove</button>
+          </div>
         ))}
-      </div>
 
-      <button onClick={handleSubmit} disabled={loading}>
-        {loading ? "Submitting..." : "Create Product"}
-      </button>
+        <button type="button" onClick={addSizeRow}>+ Add Size</button>
+
+        <input
+          type="text"
+          placeholder="Category"
+          value={product.category}
+          onChange={(e) => handleChange("category", e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="Season"
+          value={product.season}
+          onChange={(e) => handleChange("season", e.target.value)}
+        />
+
+        <input type="file" multiple onChange={handleUpload} />
+        {imagePreview.length > 0 &&
+          imagePreview.map((url, idx) => (
+            <img key={idx} src={url} alt={`Preview ${idx}`} width="100" height="100" />
+          ))
+        }
+
+        <button type="button" onClick={handleSubmit} disabled={loading}>
+          {loading ? "Submitting..." : "Create Product"}
+        </button>
+      </form>
     </div>
   );
 };
