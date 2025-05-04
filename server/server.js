@@ -113,7 +113,7 @@ const generateOrderNumber = () =>
 // Middleware
 app.use(
   cors({
-    origin: "https://shopscout.org", // ✅ no trailing slash
+    origin: ["https://shopscout.org", "https://www.shopscout.org", "https://api.shopscout.org"],
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"]
