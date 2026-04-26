@@ -7,7 +7,7 @@ export const GlobalState = createContext();
 
 export const DataProvider = ({ children }) => {
   const [token, setToken] = useState(false);
-  const BASE_URL = "https://api.shopscout.org";
+  const BASE_URL = process.env.REACT_APP_API_URL || "https://api.shopscout.org";
 
 
   const refreshToken = async () => {

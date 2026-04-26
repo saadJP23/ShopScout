@@ -7,7 +7,7 @@ import axios from 'axios';
 const Checkout = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
-  const BASE_URL = "https://api.shopscout.org";
+  const BASE_URL = process.env.REACT_APP_API_URL || "https://api.shopscout.org";
 
 
   useEffect(() => {

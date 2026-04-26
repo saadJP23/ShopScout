@@ -5,7 +5,7 @@ import LoadingSpinner from "../components/LoadingSpinner";
 const ProductAPI = () => {
   const [products, setProducts] = useState([]);
   const [callback, setCallback] = useState(false);
-  const BASE_URL = "https://api.shopscout.org";
+  const BASE_URL = process.env.REACT_APP_API_URL || "https://api.shopscout.org";
 
   const [loading, setLoading] = useState(false);
 

@@ -6,7 +6,7 @@ import LoadingSpinner from '../LoadingSpinner'
 
 const Register = () => {
 
-  const BASE_URL = "https://api.shopscout.org";
+  const BASE_URL = process.env.REACT_APP_API_URL || "https://api.shopscout.org";
 
   const [loading, setLoading] = useState(false);
 

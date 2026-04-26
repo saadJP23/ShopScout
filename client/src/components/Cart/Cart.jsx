@@ -17,7 +17,7 @@ const Cart = () => {
     name: "",
     email: "",
   });
-  const BASE_URL = "https://api.shopscout.org";
+  const BASE_URL = process.env.REACT_APP_API_URL || "https://api.shopscout.org";
 
 
   useEffect(() => {

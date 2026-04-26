@@ -13,7 +13,7 @@ const Navbar = () => {
   const [cart, setCart] = state.userAPI.cart;
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
-  const BASE_URL = "https://api.shopscout.org";
+  const BASE_URL = process.env.REACT_APP_API_URL || "https://api.shopscout.org";
 
   const logoutUser = async () => {
     await axios.get(`${BASE_URL}/user/logout`, {

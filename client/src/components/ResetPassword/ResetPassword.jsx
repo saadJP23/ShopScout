@@ -8,7 +8,7 @@ const ResetPassword = () => {
   const [msg, setMsg] = useState("");
   const [loading, setLoading] = useState(false);
   const { token } = useParams();
-  const BASE_URL = "https://api.shopscout.org";
+  const BASE_URL = process.env.REACT_APP_API_URL || "https://api.shopscout.org";
 
   const handleSubmit = async (e) => {
     e.preventDefault();

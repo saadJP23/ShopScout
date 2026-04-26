@@ -8,7 +8,7 @@ const History = () => {
   const state = useContext(GlobalState);
   const [token] = state.token;
   const [isLogged] = state.userAPI.isLogged;
-  const BASE_URL = "https://api.shopscout.org";
+  const BASE_URL = process.env.REACT_APP_API_URL || "https://api.shopscout.org";
 
 
 

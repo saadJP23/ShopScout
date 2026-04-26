@@ -13,7 +13,7 @@ const DetailProduct = () => {
   const [mainImage, setMainImage] = useState("");
   const [selectedSize, setSelectedSize] = useState("");
   const addCart = state.userAPI.addCart;
-  const BASE_URL = "https://api.shopscout.org";
+  const BASE_URL = process.env.REACT_APP_API_URL || "https://api.shopscout.org";
 
   useEffect(() => {
     if (id && products.length > 0) {
