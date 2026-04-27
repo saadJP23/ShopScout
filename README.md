@@ -122,6 +122,47 @@ If health check fails, inspect logs:
 docker compose logs --tail=200 api
 ```
 
+## Switch Between Local and AWS Environments
+
+Use this to swap both frontend and backend env files in one command.
+
+### 1) One-time setup
+
+```bash
+cd /path/to/ShopScout
+chmod +x scripts/switch-env.sh
+```
+
+Create your private env files (not committed):
+
+```bash
+cp server/.env.local.example server/.env.local
+cp server/.env.aws.example server/.env.aws
+cp client/.env.local.example client/.env.local
+cp client/.env.aws.example client/.env.aws
+```
+
+Edit each copied file with your real values.
+
+### 2) Switch to local mode
+
+```bash
+./scripts/switch-env.sh local
+```
+
+### 3) Switch to AWS mode
+
+```bash
+./scripts/switch-env.sh aws
+```
+
+After switching, restart both apps:
+
+```bash
+cd server && npm start
+cd ../client && npm start
+```
+
 ## Security Notes
 
 - Do not commit real `.env` secrets.

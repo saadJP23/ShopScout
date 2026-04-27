@@ -1,4 +1,4 @@
-# generate_sitemap.py
+
 
 from datetime import date
 
@@ -8,7 +8,7 @@ urls = [
     "/terms-and-condition"
 ]
 
-base_url = "https://www.yourdomain.com"  # change to your actual deployed domain
+base_url = "https://www.yourdomain.com"  
 today = date.today()
 
 with open("sitemap.xml", "w", encoding="utf-8") as f:

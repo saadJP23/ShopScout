@@ -1,4 +1,6 @@
 .env
 .env.docker
+.env.local
+.env.aws
 node_modules/
 
