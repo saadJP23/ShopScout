@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 import ProductLists from "../mainpages/utils/ProductList/ProductLists";
 import { GlobalState } from "../../GlobalState";
 import { useContext } from "react";
-import AdBanner from "../../AdBanner"
 import LoadingSpinner from "../LoadingSpinner";
 
 
@@ -17,8 +16,6 @@ const Home = () => {
 
   return (
     <>
-
-    <AdBanner />
     <div className="homepage">
       {/* Hero Section */}
       <section className="hero-section">

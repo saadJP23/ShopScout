@@ -385,10 +385,6 @@ app.post("/api/checkout-single", async (req, res) => {
   const { product } = req.body;
 
   try {
-    if (!product.email) {
-      return res.status(400).json({ error: "Email is required for checkout." });
-    }
-
     const line_items = [
       {
         price_data: {
