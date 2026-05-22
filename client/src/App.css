@@ -1,10 +1,1 @@
-.page-wrapper {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-  }
-  
-  .page-content {
-    flex: 1;
-  }
-  
+/* App-level layout only — all component styles live in their own CSS files */

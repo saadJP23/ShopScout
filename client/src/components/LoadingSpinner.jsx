@@ -1,35 +1,21 @@
-// components/LoadingSpinner.jsx
 import React from "react";
 
-const LoadingSpinner = () => {
-  return (
-    <div style={styles.overlay}>
-      <div style={styles.spinner}></div>
-    </div>
-  );
-};
-
-const styles = {
-  overlay: {
-    position: "fixed",
-    top: 0,
-    left: 0,
-    width: "100vw",
-    height: "100vh",
-    backgroundColor: "rgba(0,0,0,0.3)",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
+const LoadingSpinner = () => (
+  <div style={{
+    position: "fixed", inset: 0,
+    background: "rgba(8,8,8,0.75)",
+    display: "flex", alignItems: "center", justifyContent: "center",
     zIndex: 9999,
-  },
-  spinner: {
-    width: "60px",
-    height: "60px",
-    border: "6px solid #f3f3f3",
-    borderTop: "6px solid #333",
-    borderRadius: "50%",
-    animation: "spin 1s linear infinite",
-  },
-};
+    backdropFilter: "blur(4px)",
+  }}>
+    <div style={{
+      width: 52, height: 52,
+      border: "3px solid #1e1e1e",
+      borderTop: "3px solid #e5cba5",
+      borderRadius: "50%",
+      animation: "spin 0.8s linear infinite",
+    }} />
+  </div>
+);
 
 export default LoadingSpinner;

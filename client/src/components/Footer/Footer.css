@@ -1,110 +1,103 @@
-/* ✅ Updated Footer.css to match black & gold theme */
+.footer {
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border);
+}
 
-#footer {
-  background: #000;
-  padding: 40px 60px;
-  display: flex;
-  /* flex-direction: column; */
-  align-items: center;
+.footer__inner {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr 1fr;
   gap: 40px;
-  color: #e5cba5;
-  border-top: 1px solid #222;
-  justify-content: space-around;
+  padding: 60px 80px 48px;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
-.logo-title {
-  font-family: 'Cinzel', serif;
-  font-size: 32px;
-  color: #e5cba5;
-  letter-spacing: 8px;
-  text-shadow: 0 0 8px #e5cba5;
-  text-align: center;
-}
+/* Brand Column */
+.footer__brand {}
 
-.footer-sections {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 60px;
-  flex-wrap: wrap;
-}
-
-.footer-sections > div {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  min-width: 180px;
-}
-
-.footer-sections h3 {
-  font-size: 18px;
+.footer__logo {
+  width: 48px; height: 48px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 8px rgba(229,203,165,0.35));
   margin-bottom: 10px;
-  font-weight: bold;
-  color: #e5cba5;
 }
 
-.footer-sections a {
-  color: #aaa;
-  text-decoration: none;
-  margin-bottom: 8px;
+.footer__brand-name {
+  font-family: var(--font-brand);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 5px;
+  margin-bottom: 12px;
+}
+
+.footer__brand-desc {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.7;
+  max-width: 240px;
+  margin-bottom: 20px;
+}
+
+.footer__socials {
+  display: flex;
+  gap: 10px;
+}
+
+.footer__social {
+  width: 36px; height: 36px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-hover);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  transition: all var(--transition);
+}
+.footer__social:hover {
+  background: var(--gold-muted);
+  border-color: var(--gold-border);
+  color: var(--gold);
+  transform: translateY(-2px);
+}
+
+/* Link Columns */
+.footer__col-title {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 18px;
+}
+
+.footer__link {
+  display: block;
   font-size: 14px;
-  transition: color 0.3s;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+  transition: color var(--transition), transform var(--transition);
+}
+.footer__link:hover { color: var(--text-secondary); transform: translateX(3px); }
+
+/* Bottom bar */
+.footer__bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 80px;
+  border-top: 1px solid var(--border);
+  font-size: 13px;
+  color: var(--text-muted);
 }
 
-.footer-sections a:hover {
-  color: #088178;
+/* Responsive */
+@media (max-width: 1000px) {
+  .footer__inner { grid-template-columns: 1fr 1fr; }
 }
 
-
-@media (max-width: 800px){
-  #footer {
-    flex-direction: column !important;
-    align-items: center;
-    justify-content: center;
-    gap: 30px;
-  }
-
-  .footer-sections {
-    align-items: flex-start;
-    justify-content: center;
-    padding-left: 40px;
-    gap: 30px;
-  }
-
-  .logo-title {
-    font-size: 24px;
-  }
-
-  a {
-    color: white;
-  }
-}
-
-@media (max-width: 480px){
-  #footer {
-    flex-direction: column !important;
-    padding: 20px 0 20px 20px;
-  }
-
-  .footer-container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    
-  }
-  .logo-title{
-    display: flex;
-    justify-content: flex-start;
-    padding-left: 0;
-    
-    text-align: left !important;
-  }
-  .footer-sections{
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-    padding-left: 0;
-    flex-direction: row !important;
-  }
+@media (max-width: 640px) {
+  .footer__inner { grid-template-columns: 1fr; padding: 40px 24px 32px; gap: 28px; }
+  .footer__bottom { flex-direction: column; gap: 6px; text-align: center; padding: 16px 24px; }
 }

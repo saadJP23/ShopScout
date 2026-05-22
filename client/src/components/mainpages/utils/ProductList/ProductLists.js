@@ -1,161 +1,165 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./productList.css";
-import { FaShoppingCart } from "react-icons/fa";
+import { FiShoppingCart, FiHeart, FiZap } from "react-icons/fi";
 import { GlobalState } from "../../../../GlobalState";
+import { useToast } from "../../../../components/Toast/ToastProvider";
 import axios from "axios";
-import LoadingSpinner from "../../../../components/LoadingSpinner";
 
-const ProductLists = ({ products, spaced }) => {
-  const state = useContext(GlobalState);
+const getWishlist = () => {
+  try { return JSON.parse(localStorage.getItem("ss_wishlist") || "[]"); }
+  catch { return []; }
+};
+
+const ProductLists = ({ products }) => {
+  const state   = useContext(GlobalState);
   const addCart = state.userAPI.addCart;
-  const [showSizeModal, setShowSizeModal] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState(null);
+  const toast   = useToast();
+
+  const [showModal, setShowModal]     = useState(false);
   const [selectedSize, setSelectedSize] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading]         = useState(false);
+  const [wished, setWished]           = useState(false);
 
   const BASE_URL = process.env.REACT_APP_API_URL || "https://api.shopscout.org";
 
+  useEffect(() => {
+    const wl = getWishlist();
+    setWished(wl.some(id => id === (products._id || products.id)));
+  }, [products]);
 
-  const handleBuyNow = async (product) => {
+  const toggleWishlist = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const wl = getWishlist();
+    const pid = products._id || products.id;
+    const updated = wished ? wl.filter(id => id !== pid) : [...wl, pid];
+    localStorage.setItem("ss_wishlist", JSON.stringify(updated));
+    setWished(!wished);
+    toast.info(wished ? "Removed from wishlist" : "Added to wishlist ♥");
+  };
+
+  const handleBuyNow = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
     try {
       setLoading(true);
       const userEmail = localStorage.getItem("userEmail");
       const res = await axios.post(`${BASE_URL}/api/checkout-single`, {
-        product: {
-          title: product.title,
-          price: product.price,
-          email: userEmail,
-        },
+        product: { title: products.title, price: products.price, email: userEmail },
       });
-
       window.location.href = res.data.url;
     } catch (err) {
-      console.error("Payment error:", err.message);
+      toast.error("Payment could not be started.");
     } finally {
       setLoading(false);
     }
   };
 
-  const handleCartClick = (product) => {
-    setSelectedProduct(product);
-    setShowSizeModal(true);
+  const openModal = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setShowModal(true);
   };
 
   const confirmAddToCart = () => {
-    if (!selectedSize) return alert("Please select a size.");
-    addCart({
-      ...selectedProduct,
-      productId: selectedProduct._id || selectedProduct.id,
-      size: selectedSize,
-    });
-
-    setShowSizeModal(false);
-    setSelectedProduct(null);
+    if (!selectedSize) { toast.error("Please select a size."); return; }
+    addCart({ ...products, productId: products._id || products.id, size: selectedSize });
+    toast.success(`${products.title} added to cart!`);
+    setShowModal(false);
     setSelectedSize("");
   };
 
-  console.log(products);
-  // console.log('spaced: ', spaced)
-
-  if (loading) {
-    return (
-      <div className="loading-fullscreen">
-        <div className="spinner">Processing payment...</div>
-      </div>
-    );
-  }
+  const firstImage = Array.isArray(products.images) && products.images.length > 0
+    ? (products.images[0].url || products.images[0])
+    : "/placeholder.png";
 
   return (
     <>
-      <div className={`product-cart ${spaced ? "with-spacing" : ""}`}>
-        <div className="product_card_alt">
-          <Link
-            to={`/detail/${products.product_unique_id}`}
-            className="product_img_wrapper_alt"
-          >
-            <div className="thumbnail-scroll">
-              {Array.isArray(products.images) && products.images.length > 0 ? (
-                <img
-                  src={products.images[0].url || products.images[0]}
-                  alt={products.title}
-                  className="product_img_alt"
-                />
-              ) : (
-                <img
-                  src="/placeholder.png"
-                  alt="no-img"
-                  className="product_img_alt"
-                />
-              )}
-            </div>
-          </Link>
+      <div className="pcard">
+        {/* Wishlist Button */}
+        <button
+          className={`pcard__wish ${wished ? "pcard__wish--active" : ""}`}
+          onClick={toggleWishlist}
+          aria-label="Wishlist"
+        >
+          <FiHeart size={15} />
+        </button>
 
-          <div className="product_content">
-            <p className="brand_title_alt">{products.title}</p>
-            {/* <h3 className="product_brand">{products.brand}</h3> */}
-            <div className="product_info_row">
-              <span className="product_price_alt">¥{products.price}</span>
-            </div>
+        {/* Image */}
+        <Link to={`/detail/${products.product_unique_id}`} className="pcard__img-wrap">
+          <img src={firstImage} alt={products.title} className="pcard__img" />
+          <div className="pcard__overlay">
+            <span className="pcard__overlay-text">View Details</span>
           </div>
+        </Link>
 
-          <div className="button-row">
-            <button
-              className="buy_now_btn"
-              onClick={() => handleBuyNow(products)}
-            >
-              Buy Now
-            </button>
-            <button
-              className="cart_icon_btn"
-              onClick={() => handleCartClick(products)}
-            >
-              <FaShoppingCart size={16} />
-            </button>
-          </div>
+        {/* Info */}
+        <div className="pcard__body">
+          <p className="pcard__title">{products.title}</p>
+          <span className="pcard__price">¥{products.price?.toLocaleString()}</span>
         </div>
 
-        {showSizeModal && selectedProduct && (
-          <div className="size-modal">
-            <div className="modal-content">
-              <h4>Select Size for "{selectedProduct.title}"</h4>
-              <select
-                value={selectedSize}
-                onChange={(e) => setSelectedSize(e.target.value)}
-              >
-                <option value="">-- Choose Size --</option>
-                {selectedProduct.sizes?.map((s, index) => {
-                  const soldArray = Array.isArray(selectedProduct.sold)
-                    ? selectedProduct.sold
-                    : JSON.parse(selectedProduct.sold || "[]");
+        {/* Actions */}
+        <div className="pcard__actions">
+          <button
+            className="pcard__btn-buy"
+            onClick={handleBuyNow}
+            disabled={loading}
+          >
+            <FiZap size={14} />
+            {loading ? "…" : "Buy Now"}
+          </button>
+          <button
+            className="pcard__btn-cart"
+            onClick={openModal}
+            aria-label="Add to cart"
+          >
+            <FiShoppingCart size={15} />
+          </button>
+        </div>
+      </div>
 
-                  const soldCount =
-                    soldArray.find((soldItem) => soldItem.size === s.size)
-                      ?.units || 0;
+      {/* Size Modal */}
+      {showModal && (
+        <div className="size-modal" onClick={() => setShowModal(false)}>
+          <div className="size-modal__box" onClick={e => e.stopPropagation()}>
+            <h4 className="size-modal__title">Select Size</h4>
+            <p  className="size-modal__product">{products.title}</p>
 
-                  const remaining = parseInt(s.units) - soldCount;
-                  const isDisabled = remaining <= 0;
+            <div className="size-modal__chips">
+              {products.sizes?.map((s, i) => {
+                const soldArray = Array.isArray(products.sold)
+                  ? products.sold
+                  : JSON.parse(products.sold || "[]");
+                const sold    = soldArray.find(x => x.size === s.size)?.units || 0;
+                const avail   = parseInt(s.units) - sold;
+                const isOut   = avail <= 0;
+                return (
+                  <button
+                    key={i}
+                    className={`size-chip ${selectedSize === s.size ? "active" : ""} ${isOut ? "disabled" : ""}`}
+                    onClick={() => !isOut && setSelectedSize(s.size)}
+                    disabled={isOut}
+                  >
+                    {s.size}
+                    {isOut && <span className="size-chip__out">Out</span>}
+                  </button>
+                );
+              })}
+            </div>
 
-                  return (
-                    <option key={index} value={s.size} disabled={isDisabled}>
-                      {s.size}
-                    </option>
-                  );
-                })}
-              </select>
-              <div style={{ marginTop: "1rem" }}>
-                <button
-                  onClick={confirmAddToCart}
-                  style={{ marginRight: "1rem" }}
-                >
-                  Add to Cart
-                </button>
-                <button onClick={() => setShowSizeModal(false)}>Cancel</button>
-              </div>
+            <div className="size-modal__footer">
+              <button className="size-modal__confirm" onClick={confirmAddToCart}>
+                <FiShoppingCart size={15} /> Add to Cart
+              </button>
+              <button className="size-modal__cancel" onClick={() => setShowModal(false)}>
+                Cancel
+              </button>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </>
   );
 };

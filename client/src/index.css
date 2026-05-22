@@ -1,23 +1,125 @@
+/* ─── ShopScout Global Design System ────────────────────────────────── */
+/* Component-specific CSS is imported directly by each component file.   */
+
+/* ─── Design Tokens ─────────────────────────────────────────────────── */
+:root {
+  --bg-primary:    #080808;
+  --bg-secondary:  #111111;
+  --bg-card:       #161616;
+  --bg-elevated:   #1e1e1e;
+
+  --gold:          #e5cba5;
+  --gold-dim:      #c4a97e;
+  --gold-muted:    rgba(229, 203, 165, 0.12);
+  --gold-border:   rgba(229, 203, 165, 0.22);
+
+  --teal:          #0f766e;
+  --teal-hover:    #0d9488;
+  --teal-muted:    rgba(15, 118, 110, 0.18);
+
+  --text-primary:  #f0ece6;
+  --text-secondary:#aaaaaa;
+  --text-muted:    #555555;
+
+  --border:        #1f1f1f;
+  --border-hover:  #333333;
+
+  --radius-sm:     6px;
+  --radius-md:     12px;
+  --radius-lg:     20px;
+
+  --transition:    0.25s ease;
+  --shadow-card:   0 8px 32px rgba(0,0,0,0.55);
+  --shadow-hover:  0 20px 56px rgba(0,0,0,0.75);
+  --shadow-gold:   0 0 24px rgba(229,203,165,0.12);
+
+  --font-brand:    'Cinzel', serif;
+  --font-body:     'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --nav-height:    72px;
+}
+
+/* ─── Global Reset ───────────────────────────────────────────────────── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  line-height: 1.65;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
+a { text-decoration: none; color: inherit; }
+button { cursor: pointer; font-family: var(--font-body); border: none; }
+input, textarea, select { font-family: var(--font-body); }
+img { max-width: 100%; display: block; }
+ul { list-style: none; }
 
-@import url("./components//mainpages//products/product.css");
-@import url('./components/DetailProduct/DetailProduct.css');
-@import url('./components/Login/Login.css');
-@import url('./components/Register/Register.css');
-@import url('./components/Footer/Footer.css');
+/* ─── Scrollbar ──────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--bg-secondary); }
+::-webkit-scrollbar-thumb { background: var(--border-hover); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+/* ─── Animations ─────────────────────────────────────────────────────── */
 @keyframes spin {
-  0% { transform: rotate(0deg); }
+  0%   { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(60px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes pulse-gold {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(229,203,165,0.4); }
+  50%       { box-shadow: 0 0 0 8px rgba(229,203,165,0); }
+}
+
+/* ─── Page Layout ────────────────────────────────────────────────────── */
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.page-content { flex: 1; }
+
+/* ─── Shared Button Styles ───────────────────────────────────────────── */
+.btn-primary {
+  background: var(--teal);
+  color: #fff;
+  padding: 11px 24px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: background var(--transition), transform var(--transition);
+}
+.btn-primary:hover { background: var(--teal-hover); transform: translateY(-1px); }
+
+.btn-gold {
+  background: transparent;
+  color: var(--gold);
+  border: 1.5px solid var(--gold-border);
+  padding: 11px 24px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: all var(--transition);
+}
+.btn-gold:hover {
+  background: var(--gold);
+  color: var(--bg-primary);
+  border-color: var(--gold);
 }

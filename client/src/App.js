@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import Home from "./components/Home/Home";
@@ -18,54 +18,51 @@ import PrivacyPolicy from "./components/Privacy/PrivacyPolicy";
 import TermsAndConditions from "./components/TermsAndCondition/TermsConditions";
 import TrackOrder from "./components/Track/TrackOrder";
 import Help from "./components/Help/Help";
-import './App.css'
-import CheckOut from './components/CheckOut/CheckOut';
-import Success from './components/Success/Success';
-import ResetPassword from './components/ResetPassword/ResetPassword'
-import ForgetPassword from './components/ForgetPassword/ForgetPassword'
-import ManageProduct from './components/ManageProduct/ManageProduct'
-import Edit from './components/Edit/Edit'
+import CheckOut from "./components/CheckOut/CheckOut";
+import Success from "./components/Success/Success";
+import ResetPassword from "./components/ResetPassword/ResetPassword";
+import ForgetPassword from "./components/ForgetPassword/ForgetPassword";
+import ManageProduct from "./components/ManageProduct/ManageProduct";
+import Edit from "./components/Edit/Edit";
+import { ToastProvider } from "./components/Toast/ToastProvider";
+import "./App.css";
 
-
-const App = () => {
-  return (
-    <DataProvider>
+const App = () => (
+  <DataProvider>
+    <ToastProvider>
       <Router>
         <div className="page-wrapper">
           <Navbar />
           <main className="page-content">
             <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/cart" element={<Cart />} />
-              <Route path="/view_all" element={<AllProducts />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/detail/:id" element={<DetailProduct />} />
-              <Route path="/admin/create" element={<CreateProduct />} />
-              <Route path="/category/:category" element={<CategoryPage />} />
-              <Route path="/history" element={<History />} />
-              <Route path="/about_us" element={<AboutUs />} />
-              <Route path="/priacy_policy" element={<PrivacyPolicy />} />
-              <Route
-                path="/terms_and_conditions"
-                element={<TermsAndConditions />}
-              />
-              <Route path="/track_order" element={<TrackOrder />} />
-              <Route path="/help" element={<Help />} />
-              <Route path="/checkout/:id" element={<CheckOut />}/>
-              <Route path="/success" element={<Success />}/>
-              <Route path="/forget_password" element={<ForgetPassword/>}/>
-              <Route path="/reset_password/:token" element={<ResetPassword/>}/>
-              <Route path="/admin/products" element={<ManageProduct />} />
-              <Route path="/admin/edit/:id" element={<Edit />} />
+              <Route path="/"                           element={<Home />} />
+              <Route path="/contact"                    element={<Contact />} />
+              <Route path="/cart"                       element={<Cart />} />
+              <Route path="/view_all"                   element={<AllProducts />} />
+              <Route path="/login"                      element={<Login />} />
+              <Route path="/register"                   element={<Register />} />
+              <Route path="/detail/:id"                 element={<DetailProduct />} />
+              <Route path="/admin/create"               element={<CreateProduct />} />
+              <Route path="/category/:category"         element={<CategoryPage />} />
+              <Route path="/history"                    element={<History />} />
+              <Route path="/about_us"                   element={<AboutUs />} />
+              <Route path="/priacy_policy"              element={<PrivacyPolicy />} />
+              <Route path="/terms_and_conditions"       element={<TermsAndConditions />} />
+              <Route path="/track_order"                element={<TrackOrder />} />
+              <Route path="/help"                       element={<Help />} />
+              <Route path="/checkout/:id"               element={<CheckOut />} />
+              <Route path="/success"                    element={<Success />} />
+              <Route path="/forget_password"            element={<ForgetPassword />} />
+              <Route path="/reset_password/:token"      element={<ResetPassword />} />
+              <Route path="/admin/products"             element={<ManageProduct />} />
+              <Route path="/admin/edit/:id"             element={<Edit />} />
             </Routes>
           </main>
           <Footer />
         </div>
       </Router>
-    </DataProvider>
-  );
-};
+    </ToastProvider>
+  </DataProvider>
+);
 
 export default App;
