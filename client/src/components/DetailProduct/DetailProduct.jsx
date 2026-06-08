@@ -54,6 +54,11 @@ const DetailProduct = () => {
   };
 
   const handleBuyNow = async () => {
+    if (!selectedSize) {
+      alert("Please select a size.");
+      return;
+    }
+
     try {
       setBuying(true);
       const userEmail = localStorage.getItem("userEmail");
