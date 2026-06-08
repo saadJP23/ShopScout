@@ -42,6 +42,11 @@ const ProductLists = ({ products }) => {
   const handleBuyNow = async (e) => {
     e.preventDefault();
     e.stopPropagation();
+    if (!selectedSize) {
+      toast.error("Please select a size.");
+      setShowModal(true);
+      return;
+    }
     try {
       setLoading(true);
       const userEmail = localStorage.getItem("userEmail");
