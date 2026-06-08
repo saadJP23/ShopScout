@@ -40,10 +40,8 @@ const ProductLists = ({ products }) => {
   };
 
   const handleBuyNow = async (e) => {
-    e.preventDefault();
-    e.stopPropagation();
+    if (e) { e.preventDefault(); e.stopPropagation(); }
     if (!selectedSize) {
-      toast.error("Please select a size.");
       setShowModal(true);
       return;
     }
@@ -155,6 +153,9 @@ const ProductLists = ({ products }) => {
             </div>
 
             <div className="size-modal__footer">
+              <button className="size-modal__buy" onClick={handleBuyNow} disabled={loading}>
+                <FiZap size={15} /> {loading ? "…" : "Buy Now"}
+              </button>
               <button className="size-modal__confirm" onClick={confirmAddToCart}>
                 <FiShoppingCart size={15} /> Add to Cart
               </button>
